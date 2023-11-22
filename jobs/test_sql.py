@@ -1,4 +1,5 @@
 import pymysql
+import pandas as pd
 create_table_sql=f"""
 CREATE TABLE `stock_zh_a_daily` (
 	`symbol` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_general_ci',
