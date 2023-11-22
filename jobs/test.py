@@ -4,6 +4,7 @@ import pandas as pd
 import pymysql
 import numpy as np
 import time
+import os
 from datetime import datetime, timedelta
 
 # 使用环境变量获得数据库。兼容开发模式可docker模式。
