@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>帮赛股票数据</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="/static/moment.min.js"></script>
+	<link rel="stylesheet" href="/static/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/jquery.dataTables.min.css">
+    <!-- 加载 searchpanes 样式文件 -->
+    <link rel="stylesheet" type="text/css" href="/static/searchPanes.dataTables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/static/select.dataTables.min.css"/>
+	<script src="/static/jquery.min.js"></script>
+	<script src="/static/bootstrap.min.js"></script>
+	<script src="/static/jquery.dataTables.min.js"></script>
+    <!-- 加载 searchpanes js 文件 -->
+    <script type="text/javascript" src="/static/dataTables.searchPanes.min.js"></script>
+	<script type="text/javascript" src="/static/dataTables.select.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/daterangepicker.css" />
+	<script type="text/javascript" src="/static/daterangepicker.min.js"></script>
+	<link type="text/html" src="/images" />
+	<script>
+	$(document).ready(function() {
+		  // 初始化daterangepicker
+		  $('#daterange').daterangepicker({
+			startDate: moment().subtract(10, 'days'), // 默认开始时间是今天以前的第十天
+			endDate: moment(), // 默认结束时间是当前时间
+			timePicker: true,
+			timePicker24Hour: true,
+			timePickerSeconds: true,
+			locale: {
+			format: 'YYYY-MM-DD HH:mm:ss' // 设置时间格式
+			}
+		});
+	$('#submit-btn').click(function() {
+		var gain_threshold = $('#gain-threshold').val();
+		var day = $('#day').val();
+		var day = $('#name').val();
+		var start_date = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm:ss');
+		var end_date = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm:ss');
+		var gain_type = $('#select-option').val()
+		$.ajax({
+		url: '/stock_data',
+		type: 'GET',
+		data: {
+			gain_threshold: gain_threshold,
+			start_date: start_date,
+            end_date: end_date,
+			gain_type: gain_type
+		},
+		beforeSend: function() {
+			$("#loadingModal").modal('show'); // 显示加载中动画
+		},
+		success: function(response) {
+			$('#stock-data').DataTable().clear().draw();
+			$('#stock-data').DataTable().rows.add(response);
+			$('#stock-data').DataTable().draw();
+			$('#stock-data').DataTable().searchPanes.rebuildPane();
+		},
+		complete: function() {
+			$('#loadingModal').modal('hide'); // 隐藏加载中动画
+		}
+		});
+	});
+    
+    // 初始化 DataTables，加入 searchPanes 的配置项
+	$('#stock-data').DataTable({
+        dom: 'Plfrtip', // 加入 P 选项，用于显示搜索面板
+		language: {
+			"sSearch": "过滤（支持输入代号及名称）："
+		},
+		"paging": true,
+		"lengthChange": true,
+		"searching": true,
+		"ordering": true,
+		'iDisplayLength':50,
+		"order": [[2, "desc"]],
+		"info": true,
+		"autoWidth": true,
+        columns: [
+            { data: "t2name" },
+            { data: "rname" },
+            { data: "gain_Amplitude_num" },
+            { data: "price_diff" },
+            { data: "volume_diff" },
+            { data: "gain_start_date" },
+            { data: "gain_end_date" },
+            { data: "market" },
+            { data: "industry" },
+			{ data: "num_rise_continue_5day" },
+            { data: "num_turnover_rate_gt_015" },
+            { data: "url_1",
+              render: function(data, type, row) {
+                var html = '<a href="' + data + '" class="btn btn-primary btn-sm" target="_blank">东财</a>';
+                return html;
+              }
+            },
+            { data: "url_2",
+              render: function(data, type, row) {
+                var html = '<a href="' + data + '" class="btn btn-primary btn-sm" target="_blank">同花顺</a>';
+                return html;
+              }
+            }
+        ],
+        // 配置 searchPanes，用来支持对“概念板块”和“行业”的搜索
+        searchPanes: {
+            viewTotal: true, // 显示总数
+			initialyCollapsed: true
+        },
+		columnDefs: [
+		{ targets: [7,8,9,10], searchPanes: { show: true } },
+		{ targets: '_all', searchPanes: { show: false } }
+	    ]
+
+});
+});
+</script>
+</head>
+<body>
+<div class="container">
+<h1>股票筛选数据</h1>
+<p>支持以下各种查询.</p>
+<div class="row">
+<div class="col-md-4">
+<div class="form-group">
+<label for="gain-threshold">筛选率:</label>
+<input type="text" class="form-control" id="gain-threshold" value="0.03">
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<label for="daterange">时间段:</label>
+<input type="text" class="form-control" id="daterange" value="" />
+</div>
+</div>		
+
+<div class="col-md-4">
+<div class="form-group">
+<label for="select-option">筛选区间:</label>
+<select class="form-control" id="select-option">
+<option value="Gain_5">5分钟</option>
+<option value="Gain_6">6分钟</option>
+<option value="Gain_7">7分钟</option>
+<option value="Gain_8">8分钟</option>
+<option value="Gain_9">9分钟</option>
+<option value="Gain_10">10分钟</option>
+<option value="Gain_15">15分钟</option>
+<option value="Gain_20">20分钟</option>
+<option value="Gain_30">30分钟</option>
+<option value="Gain_60">60分钟</option>
+</select>
+</div>
+</div>
+<div class="col-md-4">
+<br>
+<button id="submit-btn" type="button" class="btn btn-primary">查询</button>
+</div>
+<canvas id="myChart"></canvas>
+</div>
+<br>
+<!--等待加载数据滚动条模态框-->
+<div class="modal fade" id="loadingModal">
+<div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 20%;margin-left:-100px">
+<div class="progress progress-striped active" style="margin-bottom: 0;">
+<div class="progress-bar" style="width: 100%;"></div>
+</div>
+<h5 style="color:black"> <strong>正在加载...请稍等！</strong> </h5>
+</div>
+</div>
+<table id="stock-data" class="display" style="width:100%">
+<thead>
+<tr>
+<th>代号</th>
+<th>名称</th>
+<th>筛选次数</th>
+<th>价格差值比例</th>
+<th>成交量差值比例</th>
+<th>最早筛选时间</th>
+<th>最晚筛选时间</th>
+<th>概念板块</th>
+<th>行业</th>
+<th>连续5天上涨次数</th>
+<th>换手率大于15%次数</th>
+<th>跳转链接1</th>
+<th>跳转链接2</th>
+</tr>
+</thead>
+</table>
+</div>
+</body>
+</html>

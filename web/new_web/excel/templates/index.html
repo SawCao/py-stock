@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交警支队机动大队排班系统</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.0/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Add loading indicator -->
+        <div class="loading-indicator" id="loading-indicator"></div>
+        <!-- ...other elements -->
+        <div class="left-section">
+            <h3>编辑栏</h3>
+            <form id="editor-form">
+                <!-- 数据序列呈现与编辑 -->
+                {% for key, value in data.items() %}
+                <div class="data-row">
+                    <div class="key">{{ key }}:</div>
+                    <textarea name="{{ key }}" class="value autoresize">{{ value }}</textarea>
+                </div>
+                {% endfor %}
+                <button type="submit">提交</button>
+            </form>
+        </div>
+        <div class="right-section">
+            <h3>交警支队机动大队排班表</h3>
+            <div>
+                <h2>下载表格</h2>
+                <a href="{{ url_for('download_file', filename='one.xlsx') }}">安全保卫安排表</a>
+                <a href="{{ url_for('download_file', filename='two.xlsx') }}">值班表</a>
+            </div>
+            <div class="sheet-display">
+                <h4>安全保卫安排表</h4>
+                <div id="sheet-one" class="sheet"></div>
+            </div>
+            <div class="sheet-display">
+                <h4>值班表</h4>
+                <div id="sheet-two" class="sheet"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

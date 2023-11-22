@@ -1,0 +1,8 @@
+{"main_police_point": 0, "security_points": [0, 0, 0, 0, 0], "security_curr_team": 0, "security_next_team": 1}
+{"main_police_point": 30, "security_points": [16, 10, 13, 14, 7], "security_curr_team": 4, "security_next_team": 5, "time": "2023-05-27 19:18:26"}
+{"main_police_point": 61, "security_points": [31, 20, 26, 28, 17], "security_curr_team": 9, "security_next_team": 10, "time": "2023-06-25 19:59:29"}
+{"main_police_point": 92, "security_points": [45, 30, 39, 40, 30], "security_curr_team": 13, "security_next_team": 14, "time": "2023-06-25 19:59:56"}
+{"main_police_point": 122, "security_points": [60, 40, 52, 53, 39], "security_curr_team": 18, "security_next_team": 19, "time": "2023-06-25 20:00:12"}
+{"main_police_point": 153, "security_points": [75, 50, 65, 64, 52], "security_curr_team": 23, "security_next_team": 24, "time": "2023-06-25 20:00:34"}
+{"main_police_point": 183, "security_points": [90, 60, 74, 77, 65], "security_curr_team": 27, "security_next_team": 28, "time": "2023-06-25 20:00:52"}
+{"main_police_point": 214, "security_points": [105, 70, 87, 88, 78], "security_curr_team": 32, "security_next_team": 33, "time": "2023-06-25 20:01:07"}

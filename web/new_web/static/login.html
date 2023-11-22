@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>密码验证</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+      form {
+        width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+      }
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      input[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+      .error-message {
+        color: #ff0000;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+    </style>
+    <script>
+      function validateForm() {
+        var password = document.forms["loginForm"]["password"].value;
+        if (password == "110548") {
+          window.location.href = "/index";
+          return true;
+        } else {
+          var error = document.getElementById("error");
+          error.innerHTML = "Incorrect password.";
+          return false;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>密码验证</h1>
+    <form name="loginForm" onsubmit="return validateForm()" method="post" action="/index">
+      <input type="password" name="password" placeholder="Password">
+      <input type="submit" value="Login">
+      <div class="error-message" id="error"></div>
+    </form>
+  </body>
+</html>
