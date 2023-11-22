@@ -17,7 +17,7 @@ COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
 """
-def save_to_mysql(data, host="127.0.0.1", port=3306, user="root", password="mysqldb", database="stock_data"):
+def save_to_mysql(data, host="mysqldb", port=3306, user="root", password="mysqldb", database="stock_data"):
     # 建立数据库连接
     conn = pymysql.connect(host=host, port=port, user=user, password=password, database=database)
     
