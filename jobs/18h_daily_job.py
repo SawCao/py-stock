@@ -97,10 +97,10 @@ def insert_minute_wrapper(code, name):
     print("start to update gain: " + str(code))
     if code.startswith('60') or code.startswith('688'):
         insert_minute("sh" + code, name)
-        time.sleep(1)
+        time.sleep(3)
     if code.startswith('00') or code.startswith('30'):
         insert_minute("sz" + code, name)
-        time.sleep(1)
+        time.sleep(3)
 ####### 3.pdf 方法。宏观经济数据
 # 接口全部有错误。只专注股票数据。
 def stat_all(tmp_datetime):
