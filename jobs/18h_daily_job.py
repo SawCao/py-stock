@@ -85,7 +85,7 @@ def insert_minute(code, name):
             print("All Gain_ columns are 0, not inserting into database")
         else:
             common.insert_db(data, "stock_zh_a_minute_ol_2", False, "`name`,`day`")
-        time.sleep(1)
+        time.sleep(2)
         print("Time taken: {:.2f} seconds".format(time.time() - start_time))
         # Delete records that are older than 30 days
 
