@@ -124,7 +124,7 @@ def stat_all(tmp_datetime):
         data['date'] = datetime_int  # 修改时间成为int类型。
 
         #for i in range(1):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
             for i in range(data.shape[0]):
                 code = data.iat[i, 1]
                 name = data.iat[i, 2]
