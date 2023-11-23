@@ -97,10 +97,8 @@ def insert_minute_wrapper(code, name):
     print("start to update gain: " + str(code))
     if code.startswith('60') or code.startswith('688'):
         insert_minute("sh" + code, name)
-        time.sleep(2)
     if code.startswith('00') or code.startswith('30'):
         insert_minute("sz" + code, name)
-        time.sleep(2)
 ####### 3.pdf 方法。宏观经济数据
 # 接口全部有错误。只专注股票数据。
 def stat_all(tmp_datetime):
@@ -126,7 +124,7 @@ def stat_all(tmp_datetime):
         data['date'] = datetime_int  # 修改时间成为int类型。
 
         #for i in range(1):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
             for i in range(data.shape[0]):
                 code = data.iat[i, 1]
                 name = data.iat[i, 2]
