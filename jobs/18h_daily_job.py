@@ -90,8 +90,8 @@ def insert_minute(code, name):
         # Delete records that are older than 30 days
 
     except Exception as e:
-        print("exception:", e)
-        logging.exception(e)
+        #print("exception:", e)
+        logging.exception("insert_minute " + code, e)
         
 def insert_minute_wrapper(code, name):
     print("start to update gain: " + str(code))
