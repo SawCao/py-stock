@@ -58,8 +58,8 @@ def save_to_mysql(data, host=MYSQL_HOST, port=3306, user="root", password="mysql
         try: 
             sql = f"INSERT INTO stock_zh_a_daily(symbol, date, open, high, low, close, volume, turnover, rise, rise_continue) VALUES ('{index[0]}', '{index[1]}', {row['开盘']}, {row['最高']}, {row['最低']}, {row['收盘']}, {row['成交量']}, {row['换手率']}, {row['rise']}, {row['rise_continue']})"
             cursor.execute(sql)
-        except: 
-            print("INSERT INTO stock_zh_a_daily err")
+        except Exception as e: 
+            print("INSERT INTO stock_zh_a_daily err %s", e)
             continue
     conn.commit()
     
