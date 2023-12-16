@@ -90,7 +90,7 @@ def insert_minute(code, name):
         # Delete records that are older than 30 days
 
     except Exception as e:
-        print("exception:", e)
+        print("exception data:", e)
         print("data：", data)
         logging.exception("insert_minute " + code, e)
 
