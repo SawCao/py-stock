@@ -90,7 +90,7 @@ def insert_minute(code, name):
 
     except Exception as e:
         print("exception data:", e)
-        print("data：", data)
+        print("data：", ak.stock_zh_a_minute(symbol=code))
         logging.exception("insert_minute " + code, e)
 
         
