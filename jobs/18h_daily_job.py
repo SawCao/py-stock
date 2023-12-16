@@ -60,8 +60,9 @@ def stock_a_filter_price(latest_price):
 def insert_minute(code, name):
     try:
         start_time = time.time()
-        
-        data = ak.stock_zh_a_minute(symbol=code)[(-240 + 2)*15:]
+        data = ak.stock_zh_a_minute(symbol=code)
+        if len(data) > (-240 + 2)*15:
+            data = data[(-240 + 2)*15:]
         data = data.reset_index(drop=True)
         data['name'] = code[2:]
         data['rname'] = name
