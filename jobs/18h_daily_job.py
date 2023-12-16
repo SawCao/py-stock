@@ -85,14 +85,15 @@ def insert_minute(code, name):
             print("All Gain_ columns are 0, not inserting into database")
         else:
             common.insert_db(data, "stock_zh_a_minute_ol_2", False, "`name`,`day`")
-        time.sleep(1)
+        time.sleep(2)
         print("Time taken: {:.2f} seconds".format(time.time() - start_time))
         # Delete records that are older than 30 days
 
     except Exception as e:
         print("exception:", e)
         print("data：", data)
-        logging.exception(e)
+        logging.exception("insert_minute " + code, e)
+
         
 def insert_minute_wrapper(code, name):
     print("start to update gain: " + str(code))
@@ -125,7 +126,7 @@ def stat_all(tmp_datetime):
         data['date'] = datetime_int  # 修改时间成为int类型。
 
         #for i in range(1):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
             for i in range(data.shape[0]):
                 code = data.iat[i, 1]
                 name = data.iat[i, 2]
