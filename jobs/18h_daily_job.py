@@ -91,6 +91,7 @@ def insert_minute(code, name):
 
     except Exception as e:
         print("exception:", e)
+        print("data：", data)
         logging.exception(e)
         
 def insert_minute_wrapper(code, name):
@@ -130,125 +131,15 @@ def stat_all(tmp_datetime):
                 name = data.iat[i, 2]
                 executor.submit(insert_minute_wrapper, code, name)
                 # 删除老数据。
-        del_sql = " DELETE FROM `stock_zh_ah_name_new_3` where `date` = '%s' " % datetime_int
-        common.insert(del_sql)
         
-        cutoff_date = (datetime.datetime.now() - datetime.timedelta(days=40)).strftime("%Y-%m-%d")
+        cutoff_date = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d")
         delete_query = f"DELETE FROM stock_zh_a_minute_ol_2 WHERE day < '{cutoff_date}'"
         common.select(delete_query)
         
         data.set_index('code', inplace=True)
         data.drop('index', axis=1, inplace=True)
-        # 删除index，然后和原始数据合并。
-        common.insert_db(data, "stock_zh_ah_name_new_3", True, "`date`,`code`")
     except Exception as e:
         logging.exception(e)
-
-
-    # 分时数据
-    # try:
-
-    #     data = ak.stock_zh_a_minute(symbol="sh600519")
-    #     # print(data.index)
-    #     # 解决ESP 小数问题。
-    #     # data["esp"] = data["esp"].round(2)  # 数据保留2位小数
-    #     data.columns = ['day', 'open', 'high', 'low', 'close', 'volume']
-    #     data = data.loc[data["code"].apply(stock_a)].loc[data["name"].apply(stock_a_filter_st)].loc[
-    #         data["latest_price"].apply(stock_a_filter_price)]
-    #     print(data)
-    #     data['date'] = datetime_int  # 修改时间成为int类型。
-
-    #     # 删除老数据。
-    #     del_sql = " DELETE FROM `stock_zh_ah_name` where `date` = '%s' " % datetime_int
-    #     common.insert(del_sql)
-
-    #     data.set_index('code', inplace=True)
-    #     data.drop('index', axis=1, inplace=True)
-    #     print(data)
-    #     # 删除index，然后和原始数据合并。
-    #     common.insert_db(data, "stock_zh_ah_name", True, "`date`,`code`")
-    # except Exception as e:
-    #     print("error :", e)
-
-    # 龙虎榜-个股上榜统计
-    # 接口: stock_sina_lhb_ggtj
-    #
-    # 目标地址: http://vip.stock.finance.sina.com.cn/q/go.php/vLHBData/kind/ggtj/index.phtml
-    #
-    # 描述: 获取新浪财经-龙虎榜-个股上榜统计
-    #
-
-    # try:
-    #     stock_sina_lhb_ggtj = ak.stock_sina_lhb_ggtj(recent_day="5")
-    #     print(stock_sina_lhb_ggtj)
-
-    #     stock_sina_lhb_ggtj.columns = ['code', 'name', 'ranking_times', 'sum_buy', 'sum_sell', 'net_amount', 'buy_seat',
-    #                                    'sell_seat']
-
-    #     stock_sina_lhb_ggtj = stock_sina_lhb_ggtj.loc[stock_sina_lhb_ggtj["code"].apply(stock_a)].loc[
-    #         stock_sina_lhb_ggtj["name"].apply(stock_a_filter_st)]
-
-    #     stock_sina_lhb_ggtj.set_index('code', inplace=True)
-    #     # data_sina_lhb.drop('index', axis=1, inplace=True)
-    #     # 删除老数据。
-    #     stock_sina_lhb_ggtj['date'] = datetime_int  # 修改时间成为int类型。
-
-    #     # 删除老数据。
-    #     del_sql = " DELETE FROM `stock_sina_lhb_ggtj` where `date` = '%s' " % datetime_int
-    #     common.insert(del_sql)
-
-    #     common.insert_db(stock_sina_lhb_ggtj, "stock_sina_lhb_ggtj", True, "`date`,`code`")
-
-    # except Exception as e:
-    #     print("error :", e)
-
-
-    # 每日统计
-    # 接口: stock_dzjy_mrtj
-    #
-    # 目标地址: http://data.eastmoney.com/dzjy/dzjy_mrtj.aspx
-    #
-    # 描述: 获取东方财富网-数据中心-大宗交易-每日统计
-
-    # try:
-
-    #     print("################ tmp_datetime : " + datetime_str)
-
-    #     stock_dzjy_mrtj = ak.stock_dzjy_mrtj(start_date=datetime_str, end_date=datetime_str)
-    #     print(stock_dzjy_mrtj)
-
-    #     stock_dzjy_mrtj.columns = ['index', 'trade_date', 'code', 'name', 'quote_change', 'close_price', 'average_price',
-    #                                'overflow_rate', 'trade_number', 'sum_volume', 'sum_turnover',
-    #                                'turnover_market_rate']
-
-    #     stock_dzjy_mrtj.set_index('code', inplace=True)
-    #     # data_sina_lhb.drop('index', axis=1, inplace=True)
-    #     # 删除老数据。
-    #     stock_dzjy_mrtj['date'] = datetime_int  # 修改时间成为int类型。
-    #     stock_dzjy_mrtj.drop('trade_date', axis=1, inplace=True)
-    #     stock_dzjy_mrtj.drop('index', axis=1, inplace=True)
-
-    #     # 数据保留2位小数
-    #     try:
-    #         stock_dzjy_mrtj = stock_dzjy_mrtj.loc[stock_dzjy_mrtj["code"].apply(stock_a)].loc[
-    #             stock_dzjy_mrtj["name"].apply(stock_a_filter_st)]
-
-    #         stock_dzjy_mrtj["average_price"] = stock_dzjy_mrtj["average_price"].round(2)
-    #         stock_dzjy_mrtj["overflow_rate"] = stock_dzjy_mrtj["overflow_rate"].round(4)
-    #         stock_dzjy_mrtj["turnover_market_rate"] = stock_dzjy_mrtj["turnover_market_rate"].round(6)
-    #     except Exception as e:
-    #         print("round error :", e)
-
-    #     # 删除老数据。
-    #     del_sql = " DELETE FROM `stock_dzjy_mrtj` where `date` = '%s' " % datetime_int
-    #     common.insert(del_sql)
-
-    #     print(stock_dzjy_mrtj)
-
-    #     common.insert_db(stock_dzjy_mrtj, "stock_dzjy_mrtj", True, "`date`,`code`")
-
-    # except Exception as e:
-    #     print("error :", e)
 
 # main函数入口
 if __name__ == '__main__':
