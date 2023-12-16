@@ -16,6 +16,20 @@ import akshare as ak
 import logging
 import concurrent.futures
 
+# 设置日志级别为DEBUG
+logging.basicConfig(level=logging.DEBUG)
+
+# 创建一个FileHandler，用于写入日志到文件中
+file_handler = logging.FileHandler('log.txt')
+
+# 设置日志格式
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# 将FileHandler添加到logger中
+logger = logging.getLogger()
+logger.addHandler(file_handler)
+
 # 600开头的股票是上证A股，属于大盘股
 # 600开头的股票是上证A股，属于大盘股，其中6006开头的股票是最早上市的股票，
 # 6016开头的股票为大盘蓝筹股；900开头的股票是上证B股；
@@ -62,7 +76,7 @@ def insert_minute(code, name):
         start_time = time.time()
         data = ak.stock_zh_a_hist_min_em(symbol=code, period='1', adjust='')
         data = data.reset_index(drop=True)
-        data['name'] = code[2:]
+        data['name'] = code
         data['rname'] = name
         data.drop('成交额', axis=1, inplace=True)
         data.drop('最新价', axis=1, inplace=True)
@@ -81,35 +95,33 @@ def insert_minute(code, name):
             #print("data.at[interval-1:, interval_col]", data.at[interval-1:, interval_col])
             data.loc[data.index[:interval - 1], interval_col] = 0
             data.loc[data.index[interval-1]:, interval_col] = data[interval_col][interval-1:].to_numpy()
-        print("data.iloc[0]:", data.iloc[0])
+        logger.debug("data.iloc[0]:", data.iloc[0])
         if (data.filter(regex="^Gain_").sum(axis=1) == 0).all():
-            print("All Gain_ columns are 0, not inserting into database")
+            logger.debug("All Gain_ columns are 0, not inserting into database")
         else:
             common.insert_db(data, "stock_zh_a_minute_ol_2", False, "`name`,`day`")
-        print("Time taken: {:.2f} seconds".format(time.time() - start_time))
+        logger.debug("Time taken: {:.2f} seconds".format(time.time() - start_time))
         # Delete records that are older than 30 days
 
     except Exception as e:
-        print("exception data:", e)
+        logger.debug("exception data:", e)
         logging.exception("insert_minute " + code, e)
 
         
 def insert_minute_wrapper(code, name):
-    print("start to update gain: " + str(code))
+    logger.debug("start to update gain: " + str(code))
     if code.startswith('60') or code.startswith('688'):
         insert_minute(code, name)
-        time.sleep(2)
     if code.startswith('00') or code.startswith('30'):
         insert_minute(code, name)
-        time.sleep(2)
 ####### 3.pdf 方法。宏观经济数据
 # 接口全部有错误。只专注股票数据。
 def stat_all(tmp_datetime):
 
     datetime_str = (tmp_datetime).strftime("%Y-%m-%d")
     datetime_int = (tmp_datetime).strftime("%Y%m%d")
-    print("datetime_str:", datetime_str)
-    print("datetime_int:", datetime_int)
+    logger.debug("datetime_str:", datetime_str)
+    logger.debug("datetime_int:", datetime_int)
     
     # 股票列表
     try:
