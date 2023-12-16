@@ -60,10 +60,12 @@ def stock_a_filter_price(latest_price):
 def insert_minute(code, name):
     try:
         start_time = time.time()
-        data = ak.stock_zh_a_hist_min_em(symbol=code)
+        data = ak.stock_zh_a_hist_min_em(symbol=code, period='1', adjust='')
         data = data.reset_index(drop=True)
         data['name'] = code[2:]
         data['rname'] = name
+        data.drop('成交额', axis=1, inplace=True)
+        data.drop('最新价', axis=1, inplace=True)
         data.columns = ['day', 'open', 'close', 'high', 'low',  'volume', 'name', "rname"]
         intervals = [5, 6, 7, 8, 9, 10, 15, 20, 30, 60]
         for interval in intervals:
@@ -89,17 +91,16 @@ def insert_minute(code, name):
 
     except Exception as e:
         print("exception data:", e)
-        print("data：", ak.stock_zh_a_minute(symbol=code))
         logging.exception("insert_minute " + code, e)
 
         
 def insert_minute_wrapper(code, name):
     print("start to update gain: " + str(code))
     if code.startswith('60') or code.startswith('688'):
-        insert_minute("sh" + code, name)
+        insert_minute(code, name)
         time.sleep(2)
     if code.startswith('00') or code.startswith('30'):
-        insert_minute("sz" + code, name)
+        insert_minute(code, name)
         time.sleep(2)
 ####### 3.pdf 方法。宏观经济数据
 # 接口全部有错误。只专注股票数据。
