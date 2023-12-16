@@ -85,7 +85,6 @@ def insert_minute(code, name):
             print("All Gain_ columns are 0, not inserting into database")
         else:
             common.insert_db(data, "stock_zh_a_minute_ol_2", False, "`name`,`day`")
-        time.sleep(2)
         print("Time taken: {:.2f} seconds".format(time.time() - start_time))
         # Delete records that are older than 30 days
 
@@ -126,11 +125,18 @@ def stat_all(tmp_datetime):
         data['date'] = datetime_int  # 修改时间成为int类型。
 
         #for i in range(1):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-            for i in range(data.shape[0]):
-                code = data.iat[i, 1]
-                name = data.iat[i, 2]
-                executor.submit(insert_minute_wrapper, code, name)
+        # with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        #     for i in range(data.shape[0]):
+        #         code = data.iat[i, 1]
+        #         name = data.iat[i, 2]
+        #         executor.submit(insert_minute_wrapper, code, name)
+        #         time.sleep(2)
+    
+        for i in range(data.shape[0]):
+            code = data.iat[i, 1]
+            name = data.iat[i, 2]
+            insert_minute_wrapper(code, name)
+            time.sleep(2)
                 # 删除老数据。
         
         cutoff_date = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d")
