@@ -179,15 +179,15 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
                 url_2 = 'http://stockpage.10jqka.com.cn/%s/' % code_tmp[2:]
                 result['rname'] = third_result['rname']
                 # Add second query results to first query results
-                if int(second_result['low']) == 0:
+                if float(second_result['low']) == 0:
                     result['price_diff'] = "100%"
                 else:
-                    result['price_diff'] = str(round((int(third_result['high']) - int(second_result['low']))/int(second_result['low'])*100, 2)) + "%"
+                    result['price_diff'] = str(round((float(third_result['high']) - float(second_result['low']))/float(second_result['low'])*100, 2)) + "%"
                 
-                if int(second_result['volume']) == 0:
+                if float(second_result['volume']) == 0:
                     result['volume_diff'] = "100%"
                 else:
-                    result['volume_diff'] = str(round((int(third_result['volume']) - int(second_result['volume']))/int(second_result['volume'])*100, 2)) + "%"
+                    result['volume_diff'] = str(round((float(third_result['volume']) - float(second_result['volume']))/float(second_result['volume'])*100, 2)) + "%"
                 result['gain_start_date'] = str(second_result['day'])
                 result['gain_end_date'] = str(third_result['day'])
                 result['url_1'] = url_1
