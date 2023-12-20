@@ -95,7 +95,7 @@ def insert_minute(code, name):
             #print("data.at[interval-1:, interval_col]", data.at[interval-1:, interval_col])
             data.loc[data.index[:interval - 1], interval_col] = 0
             data.loc[data.index[interval-1]:, interval_col] = data[interval_col][interval-1:].to_numpy()
-        logger.debug("data.iloc[0]:", data.iloc[0])
+        #logger.debug("data.iloc[0]:", data.iloc[0])
         if (data.filter(regex="^Gain_").sum(axis=1) == 0).all():
             logger.debug("All Gain_ columns are 0, not inserting into database")
         else:
