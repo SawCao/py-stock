@@ -99,7 +99,7 @@ def insert_minute(code, name):
         if (data.filter(regex="^Gain_").sum(axis=1) == 0).all():
             logger.debug("All Gain_ columns are 0, not inserting into database")
         else:
-            common.insert_db(data, "stock_zh_a_minute_ol_2", False, "`name`,`day`")
+            common.insert_db(data, "stock_zh_a_minute_ol_4", False, "`name`,`day`")
         logger.debug("Time taken: {:.2f} seconds".format(time.time() - start_time))
         # Delete records that are older than 30 days
 
@@ -153,7 +153,7 @@ def stat_all(tmp_datetime):
                 # 删除老数据。
         
         cutoff_date = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d")
-        delete_query = f"DELETE FROM stock_zh_a_minute_ol_2 WHERE day < '{cutoff_date}'"
+        delete_query = f"DELETE FROM stock_zh_a_minute_ol_4 WHERE day < '{cutoff_date}'"
         common.select(delete_query)
         
         data.set_index('code', inplace=True)
