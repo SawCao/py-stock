@@ -103,7 +103,7 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
             # Query database
             query = """
                 SELECT name as t2name, count(*) as gain_Amplitude_num
-                FROM stock_zh_a_minute_ol_3
+                FROM stock_zh_a_minute_ol_4
                 WHERE %s > %s and `day` > '%s' and `day` < '%s'
                 GROUP BY name
                 ORDER BY gain_Amplitude_num DESC
@@ -130,7 +130,7 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
                 # Perform second query
                 second_query = """
                     SELECT day, low, volume, high
-                    FROM stock_zh_a_minute_ol_3
+                    FROM stock_zh_a_minute_ol_4
                     WHERE %s > %s AND `name` = '%s' and `day` > '%s' and `day` < '%s'
                     ORDER BY `day` ASC 
                     LIMIT 1
@@ -141,7 +141,7 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
 
                 third_query = """
                     SELECT day, low, volume, high, rname
-                    FROM stock_zh_a_minute_ol_3 
+                    FROM stock_zh_a_minute_ol_4 
                     WHERE %s > %s AND `name` = '%s' and `day` > '%s' and `day` < '%s'
                     ORDER BY `day` DESC 
                     LIMIT 1
