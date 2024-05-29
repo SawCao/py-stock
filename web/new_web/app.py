@@ -103,11 +103,11 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
             # Query database
             query = """
                 SELECT name as t2name, count(*) as gain_Amplitude_num
-                FROM stock_zh_a_minute_ol_2
+                FROM stock_zh_a_minute_ol_3
                 WHERE %s > %s and `day` > '%s' and `day` < '%s'
                 GROUP BY name
                 ORDER BY gain_Amplitude_num DESC
-                LIMIT 1000
+                LIMIT 100
             """ % (str(gain_type), str(gain_threshold), start_date, end_date)
             
             cursor.execute(query)
@@ -130,8 +130,7 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
                 # Perform second query
                 second_query = """
                     SELECT day, low, volume, high
-                
-                    FROM stock_zh_a_minute_ol_2 
+                    FROM stock_zh_a_minute_ol_3
                     WHERE %s > %s AND `name` = '%s' and `day` > '%s' and `day` < '%s'
                     ORDER BY `day` ASC 
                     LIMIT 1
@@ -142,7 +141,7 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
 
                 third_query = """
                     SELECT day, low, volume, high, rname
-                    FROM stock_zh_a_minute_ol_2 
+                    FROM stock_zh_a_minute_ol_3 
                     WHERE %s > %s AND `name` = '%s' and `day` > '%s' and `day` < '%s'
                     ORDER BY `day` DESC 
                     LIMIT 1
@@ -152,7 +151,6 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
                 
                 forth_query = """
                     SELECT 
-                        
                         COUNT(CASE WHEN rise_continue = 1 THEN 1 END) AS num_rise_continue,
                         COUNT(CASE WHEN turnover > 0.15 THEN 1 END) AS num_turnover_rate_gt_015
                     FROM 
