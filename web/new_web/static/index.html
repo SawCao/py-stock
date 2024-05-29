@@ -42,6 +42,7 @@
 		$.ajax({
 		url: '/stock_data',
 		type: 'GET',
+		timeout: 100000,
 		data: {
 			gain_threshold: gain_threshold,
 			start_date: start_date,
@@ -59,7 +60,12 @@
 		},
 		complete: function() {
 			$('#loadingModal').modal('hide'); // 隐藏加载中动画
-		}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+            // 处理可能的错误
+            console.log(textStatus, errorThrown);
+            $('#loadingModal').modal('hide'); // 隐藏加载中动画
+        }
 		});
 	});
     
