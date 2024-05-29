@@ -152,7 +152,7 @@ def stat_all(tmp_datetime):
             insert_minute_wrapper(code, name)
                 # 删除老数据。
         
-        cutoff_date = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d")
+        cutoff_date = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%S")
         delete_query = f"DELETE FROM stock_zh_a_minute_ol_4 WHERE day < '{cutoff_date}'"
         common.select(delete_query)
         
