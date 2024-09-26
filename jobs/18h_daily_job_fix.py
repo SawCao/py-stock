@@ -78,6 +78,7 @@ def insert_minute(code, name):
         data = data.reset_index(drop=True)
         data['name'] = code
         data['rname'] = name
+        logger.info("data frame:", data.keys)
         data.drop('成交额', axis=1, inplace=True)
         data.drop('最新价', axis=1, inplace=True)
         data.columns = ['day', 'open', 'close', 'high', 'low',  'volume', 'name', "rname"]
