@@ -74,7 +74,7 @@ def stock_a_filter_price(latest_price):
 def insert_minute(code, name):
     try:
         start_time = time.time()
-        data = ak.stock_zh_a_hist_min_em(symbol=code, period='5', adjust='')
+        data = ak.stock_zh_a_hist_min_em(symbol=code, period='1', adjust='')
         data = data.reset_index(drop=True)
         data['name'] = code
         data['rname'] = name
