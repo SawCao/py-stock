@@ -115,3 +115,4 @@ doc
 /bin
 pkg
 *.tmp
+/web/umi-stock/node_modules/

@@ -1,0 +1,74 @@
+.stock-detail-container {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.system-banner {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+}
+
+.detail-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+// 卡片样式优化
+.ant-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+// 响应式布局
+@media (max-width: 768px) {
+  .stock-detail-container {
+    padding: 12px;
+  }
+  
+  .system-banner {
+    padding: 15px 0;
+    
+    h1 {
+      font-size: 24px;
+    }
+  }
+}
+
+// K线图容器样式
+#kline-chart {
+  border-radius: 8px;
+  overflow: hidden;
+}
