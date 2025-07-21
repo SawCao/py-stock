@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -20,16 +20,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 
 # 使用国内PyPI镜像加速Python依赖安装
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制应用代码
 COPY . .
 
-# 创建日志目录
-RUN mkdir -p /app/logs
+# 创建日志和数据目录
+RUN mkdir -p /app/logs /app/data
 
-# 暴露端口
-EXPOSE 5000
+# 创建启动脚本 - 使用Python调度器替代crontab
+RUN echo '#!/bin/bash\n\
+echo "启动增强版Python定时任务调度器..."\n\
+python enhanced_scheduler.py' > /app/start.sh && chmod +x /app/start.sh
+
+# 暴露端口（用于健康检查）
+EXPOSE 8080
 
 # 启动命令
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--timeout", "120", "web.new_web.app:app"]
+CMD ["/app/start.sh"]

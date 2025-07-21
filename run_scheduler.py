@@ -43,7 +43,7 @@ def run_test_mode():
 def run_once_mode():
     """单次执行模式 - 执行一次后退出"""
     print("单次执行模式...")
-    run_test_mode()
+    cf()
 
 def main():
     parser = argparse.ArgumentParser(description='定时任务管理脚本')
