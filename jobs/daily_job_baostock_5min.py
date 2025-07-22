@@ -72,6 +72,8 @@ STOCK_PATTERNS = {
     'sh_a': re.compile(r'^6(0|8|9)\d{4}$'),  # 上证A股
     'sz_a': re.compile(r'^(0|3)\d{5}$'),     # 深证A股
     'b_share': re.compile(r'^(900|200)\d{3}$'),  # B股
+    'bj_a': re.compile(r'bj'),  # bj A股
+    'st': re.compile(r'st', re.IGNORECASE),  # ST股票
 }
 
 # 计算周期配置
@@ -81,7 +83,7 @@ def is_valid_a_share(code: str) -> bool:
     """判断是否为有效A股代码"""
     if not code or not isinstance(code, str):
         return False
-    return not STOCK_PATTERNS['b_share'].match(code)
+    return not (STOCK_PATTERNS['b_share'].match(code) and STOCK_PATTERNS['bj_a'].match(code) and STOCK_PATTERNS['st'].match(code))
 
 def is_not_st_stock(name: str) -> bool:
     """过滤ST股票"""
@@ -378,9 +380,8 @@ def get_stock_list() -> pd.DataFrame:
         filtered_data = data[mask].copy()
         
         # 格式化股票代码以适应baostock
-        filtered_data['code'] = filtered_data['code'].apply(
-            lambda x: f"sh.{x}" if x.startswith('6') else f"sz.{x}"
-        )
+        filtered_data['code'] = filtered_data['code'].apply(lambda x: f"{x[:2]}.{x[2:]}")
+        
         logger.info(f"Filtered {len(filtered_data)} stocks from {len(data)} total")
         
         return filtered_data
