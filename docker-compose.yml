@@ -33,7 +33,7 @@ services:
     environment:
       - MYSQL_HOST=stock-mysql
       - MYSQL_USER=stock_user
-      - MYSQL_PASSWORD=stock_pass_2024
+      - MYSQL_PWD=stock_pass_2024
       - MYSQL_DB=stock_data
       - TZ=Asia/Shanghai
       - FLASK_ENV=production

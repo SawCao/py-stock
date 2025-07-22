@@ -15,6 +15,7 @@ from sqlalchemy.types import NVARCHAR
 from sqlalchemy import inspect
 import datetime
 import akshare as ak
+import baostock as bs
 import logging
 import concurrent.futures
 from typing import List, Tuple, Optional
@@ -74,7 +75,7 @@ STOCK_PATTERNS = {
 }
 
 # 计算周期配置
-INTERVALS = [5, 6, 7, 8, 9, 10, 15, 20, 30, 60]
+INTERVALS = [5, 10, 15, 20, 30, 60]
 
 def is_valid_a_share(code: str) -> bool:
     """判断是否为有效A股代码"""
@@ -110,34 +111,44 @@ def retry_on_exception(max_retries: int = CONFIG['RETRY_TIMES'], delay: int = CO
 @retry_on_exception()
 def fetch_minute_data(code: str, name: str) -> Optional[pd.DataFrame]:
     """获取单只股票分钟级数据"""
+    time.sleep(1)
     start_time = time.time()
     current_date = datetime.datetime.now()
-    end_date_str = current_date.strftime("%Y%m%d")
-    start_date_str = (current_date - datetime.timedelta(days=30)).strftime("%Y%m%d")
+    start_date_str = (current_date - datetime.timedelta(days=30)).strftime("%Y-%m-%d")
+    end_date_str = current_date.strftime("%Y-%m-%d")
     try:
-        # 使用 ak.stock_zh_a_minute 替换 ak.stock_zh_a_hist, 这是获取分钟级数据的推荐接口
-        data = ak.stock_zh_a_minute(symbol=code,  period='1', adjust='')
+        # 获取5分钟K线数据
+        rs = bs.query_history_k_data_plus(
+            code,
+            "time,open,high,low,close,volume",
+            start_date=start_date_str,
+            end_date=end_date_str,
+            frequency="5",
+            adjustflag="3"
+        )
+        
+        if rs.error_code != '0':
+            logger.warning(f"No data for {code} - {name}: {rs.error_msg}")
+            return None
+            
+        data = rs.get_data()
         if data.empty:
             logger.warning(f"No data for {code} - {name}")
             return None
-            
+
         # 数据预处理
-        data = data.reset_index(drop=True)
+        data = data.rename(columns={'time': 'day'})
+        data['day'] = pd.to_datetime(data['day'], format='%Y%m%d%H%M%S%f')
         
-        
-        # 直接重命名预期的列，并保留它们
-        # ak.stock_zh_a_minute 的列名是固定的: day, open, close, high, low, volume
         required_cols = ['day', 'open', 'close', 'high', 'low', 'volume']
-        
-        # 检查所需列是否存在
         if not all(col in data.columns for col in required_cols):
             logger.warning(f"Missing required columns for {code}, available: {data.columns.tolist()}")
             return None
-
+            
         data = data[required_cols]
         
         # 添加股票代码和名称
-        data['name'] = code
+        data['name'] = code.split('.')[1]
         data['rname'] = name
         
         # 确保数值类型正确
@@ -356,6 +367,7 @@ def get_stock_list() -> pd.DataFrame:
         data = data.rename(columns={'代码': 'code'})
         data = data.rename(columns={'名称': 'name'})
         data = data.rename(columns={'昨收': 'latest_price'})
+        
         # 应用过滤条件
         mask = (
             data['code'].apply(is_valid_a_share) &
@@ -364,6 +376,11 @@ def get_stock_list() -> pd.DataFrame:
         )
         
         filtered_data = data[mask].copy()
+        
+        # 格式化股票代码以适应baostock
+        filtered_data['code'] = filtered_data['code'].apply(
+            lambda x: f"sh.{x}" if x.startswith('6') else f"sz.{x}"
+        )
         logger.info(f"Filtered {len(filtered_data)} stocks from {len(data)} total")
         
         return filtered_data
@@ -424,6 +441,9 @@ def stat_all(tmp_datetime: datetime.datetime):
     start_time = time.time()
     
     try:
+        # 登录baostock
+        bs.login()
+        
         datetime_str = tmp_datetime.strftime("%Y-%m-%d")
         datetime_int = tmp_datetime.strftime("%Y%m%d")
         
@@ -448,10 +468,13 @@ def stat_all(tmp_datetime: datetime.datetime):
         elapsed = time.time() - start_time
         logger.info(f"Job completed: {results['success']} success, {results['failed']} failed, "
                    f"total {results['total']} stocks in {elapsed:.2f}s")
-        
+                   
     except Exception as e:
         logger.error(f"Job failed: {e}")
         raise
+    finally:
+        # 登出baostock
+        bs.logout()
 
 if __name__ == '__main__':
     # 创建日志目录
