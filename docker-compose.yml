@@ -31,8 +31,13 @@ services:
     ports:
       - "5000:5000"
     environment:
+      - MYSQL_HOST=stock-mysql
+      - MYSQL_USER=stock_user
+      - MYSQL_PASSWORD=stock_pass_2024
+      - MYSQL_DB=stock_data
+      - TZ=Asia/Shanghai
       - FLASK_ENV=production
-      - DATABASE_URL=mysql+pymysql://stock_user:stock_pass_2024@mysql:3306/stock_data
+      - DATABASE_URL=mysql+pymysql://stock_user:stock_pass_2024@stock-mysql:3306/stock_data
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       mysql:

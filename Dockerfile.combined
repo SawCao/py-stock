@@ -3,12 +3,16 @@ FROM python:3.11
 WORKDIR /app
 
 # 合并系统依赖安装步骤，减少镜像层数
+# 使用阿里云镜像源加速下载
+RUN echo "deb http://mirrors.aliyun.com/debian/ bookworm main non-free contrib" > /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/debian-security bookworm-security main" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/debian/ bookworm-updates main non-free contrib" >> /etc/apt/sources.list
 
 # 复制依赖文件
 COPY requirements.txt .
 
 # 使用国内PyPI镜像加速Python依赖安装
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir  -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 # 复制应用代码
 COPY . .
