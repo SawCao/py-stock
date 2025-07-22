@@ -58,7 +58,7 @@ logger = setup_logging()
 
 # 配置参数
 CONFIG = {
-    'MAX_WORKERS': 4,  # 并发线程数
+    'MAX_WORKERS': 1,  # 并发线程数
     'RETRY_TIMES': 3,  # 重试次数
     'RETRY_DELAY': 2,  # 重试延迟(秒)
     'CLEANUP_DAYS': 20,  # 数据保留天数
@@ -114,7 +114,8 @@ def fetch_minute_data(code: str, name: str) -> Optional[pd.DataFrame]:
     
     try:
         # 获取数据
-        data = ak.stock_zh_a_hist_min_em(symbol=code, period='1', adjust='')
+        # 使用 ak.stock_zh_a_hist 替换 ak.stock_zh_a_hist_min_em, 避免东方财富链接问题
+        data = ak.stock_zh_a_hist(symbol=code, period='1', adjust='')
         if data.empty:
             logger.warning(f"No data for {code} - {name}")
             return None
@@ -343,17 +344,17 @@ def process_single_stock(code: str, name: str) -> bool:
         data = calculate_gain_indicators(data)
         
         # 计算额外的指标
-        current_date = datetime.datetime.now()
-        additional_indicators = calculate_additional_indicators(code, current_date)
+        # current_date = datetime.datetime.now()
+        # additional_indicators = calculate_additional_indicators(code, current_date)
         
         # 添加新指标到数据中
-        data['price_change_5d'] = additional_indicators['price_change_5d']
-        data['volume_ratio_10d'] = additional_indicators['volume_ratio_10d']
-        data['consecutive_up_5d'] = additional_indicators['consecutive_up_5d']
-        data['high_turnover_10d'] = additional_indicators['high_turnover_10d']
-        data['high_turnover_5d'] = additional_indicators['high_turnover_5d']
-        data['volume_increase_5d_pct'] = additional_indicators['volume_increase_5d_pct']
-        data['volume_increase_10d_pct'] = additional_indicators['volume_increase_10d_pct']
+        # data['price_change_5d'] = additional_indicators['price_change_5d']
+        # data['volume_ratio_10d'] = additional_indicators['volume_ratio_10d']
+        # data['consecutive_up_5d'] = additional_indicators['consecutive_up_5d']
+        # data['high_turnover_10d'] = additional_indicators['high_turnover_10d']
+        # data['high_turnover_5d'] = additional_indicators['high_turnover_5d']
+        # data['volume_increase_5d_pct'] = additional_indicators['volume_increase_5d_pct']
+        # data['volume_increase_10d_pct'] = additional_indicators['volume_increase_10d_pct']
         
         # 检查是否应该插入
         if not should_insert_data(data):
@@ -374,15 +375,14 @@ def get_stock_list() -> pd.DataFrame:
     """获取股票列表"""
     try:
         logger.info("Fetching stock list...")
-        data = ak.stock_zh_a_spot_em()
+        data = ak.stock_zh_a_spot()
         
         if data.empty:
             raise ValueError("Empty stock list received")
             
         # 标准化列名
-        data.columns = ['index', 'code', 'name', 'latest_price', 'quote_change', 'ups_downs', 
-                       'volume', 'turnover', 'amplitude', 'high', 'low', 'open', 'closed', 
-                       'quantity_ratio', 'turnover_rate', 'pe_dynamic', 'pb'] + [f't{i}' for i in range(1, 7)]
+        # 'trade' in stock_zh_a_spot corresponds to 'latest_price'
+        data = data.rename(columns={'trade': 'latest_price'})
         
         # 应用过滤条件
         mask = (
