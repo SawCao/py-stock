@@ -35,7 +35,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "preset",
@@ -48,7 +48,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 8
+        "register": 6
       },
       "enableBy": "register",
       "type": "preset",
@@ -62,10 +62,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            2
+            1
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -113,10 +113,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            6
+            7
           ]
         },
-        "register": 19
+        "register": 20
       },
       "enableBy": "register",
       "type": "plugin",
@@ -129,7 +129,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -146,10 +146,10 @@
             0
           ],
           "onCheck": [
-            0
+            1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -166,7 +166,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -179,7 +179,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -196,7 +196,7 @@
             0
           ]
         },
-        "register": 7
+        "register": 6
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1048,7 +1048,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1078,7 +1078,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1091,7 +1091,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 69
+        "register": 63
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1104,7 +1104,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 74
+        "register": 70
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1117,7 +1117,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 21
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1160,7 +1160,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1172,12 +1172,8 @@
     "./node_modules/@umijs/preset-umi/dist/features/mock/mock": {
       "config": {},
       "time": {
-        "hooks": {
-          "onStart": [
-            1
-          ]
-        },
-        "register": 26
+        "hooks": {},
+        "register": 25
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1227,7 +1223,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1241,10 +1237,10 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            0
           ]
         },
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill.js",
@@ -1269,7 +1265,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1282,7 +1278,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1295,7 +1291,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1308,7 +1304,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1334,7 +1330,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
@@ -1359,7 +1355,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1372,7 +1368,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1385,7 +1381,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1398,7 +1394,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1411,7 +1407,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 4
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1450,7 +1446,6 @@
         "hooks": {},
         "register": 1
       },
-      "enableBy": "config",
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent.js",
       "cwd": "C:\\code\\py-stock-2\\py-stock\\web\\umi-stock",
@@ -1461,7 +1456,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1487,7 +1482,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1503,7 +1498,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1516,7 +1511,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1541,7 +1536,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1578,7 +1573,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1591,7 +1586,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1604,7 +1599,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 31
+        "register": 28
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1616,15 +1611,8 @@
     "./node_modules/@umijs/preset-umi/dist/commands/dev/dev": {
       "config": {},
       "time": {
-        "hooks": {
-          "modifyAppData": [
-            28
-          ],
-          "onStart": [
-            0
-          ]
-        },
-        "register": 27
+        "hooks": {},
+        "register": 25
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1662,7 +1650,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1701,7 +1689,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1727,7 +1715,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1740,7 +1728,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1753,7 +1741,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1766,7 +1754,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1779,7 +1767,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1870,7 +1858,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 21
+        "register": 16
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1896,7 +1884,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1909,7 +1897,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1939,7 +1927,7 @@
     }
   },
   "presets": [],
-  "name": "dev",
+  "name": "build",
   "args": {
     "_": []
   },
@@ -1998,7 +1986,7 @@
       "react-router": "C:\\code\\py-stock-2\\py-stock\\web\\umi-stock\\node_modules\\react-router",
       "react-router-dom": "C:\\code\\py-stock-2\\py-stock\\web\\umi-stock\\node_modules\\@umijs\\preset-umi\\node_modules\\react-router-dom",
       "@": "C:/code/py-stock-2/py-stock/web/umi-stock/src",
-      "@@": "C:/code/py-stock-2/py-stock/web/umi-stock/src/.umi",
+      "@@": "C:/code/py-stock-2/py-stock/web/umi-stock/src/.umi-production",
       "regenerator-runtime": "C:\\code\\py-stock-2\\py-stock\\web\\umi-stock\\node_modules\\regenerator-runtime",
       "antd": "C:\\code\\py-stock-2\\py-stock\\web\\umi-stock\\node_modules\\antd"
     },
@@ -3014,9 +3002,6 @@
     "tslibVersion": "2.8.1"
   },
   "faviconFiles": [],
-  "port": 8001,
-  "host": "0.0.0.0",
-  "ip": "192.168.1.20",
   "antd": {
     "pkgPath": "C:\\code\\py-stock-2\\py-stock\\web\\umi-stock\\node_modules\\antd",
     "version": "5.26.5"

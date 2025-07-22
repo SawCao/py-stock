@@ -83,9 +83,10 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
     logging.info('ffff')
     # Connect to the database
     connection = pymysql.connect(
-        host='mysqldb',
-        user='root',
-        password='mysqldb',
+        host='127.0.0.1',
+        port=3306,
+        user='stock_user',
+        password='stock_pass',
         database='stock_data',
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -216,4 +217,4 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
     finally:
         connection.close()
 if __name__ == '__main__':
-    app.run(debug=true)
+    app.run(debug=True)
