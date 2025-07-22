@@ -111,11 +111,12 @@ def retry_on_exception(max_retries: int = CONFIG['RETRY_TIMES'], delay: int = CO
 def fetch_minute_data(code: str, name: str) -> Optional[pd.DataFrame]:
     """获取单只股票分钟级数据"""
     start_time = time.time()
-    
+    current_date = datetime.datetime.now()
+    end_date_str = current_date.strftime("%Y%m%d")
+    start_date_str = (current_date - datetime.timedelta(days=30)).strftime("%Y%m%d")
     try:
-        # 获取数据
-        # 使用 ak.stock_zh_a_hist 替换 ak.stock_zh_a_hist_min_em, 避免东方财富链接问题
-        data = ak.stock_zh_a_hist(symbol=code, period='1', adjust='')
+        # 使用 ak.stock_zh_a_minute 替换 ak.stock_zh_a_hist, 这是获取分钟级数据的推荐接口
+        data = ak.stock_zh_a_minute(symbol=code,  period='1', adjust='')
         if data.empty:
             logger.warning(f"No data for {code} - {name}")
             return None
@@ -123,63 +124,35 @@ def fetch_minute_data(code: str, name: str) -> Optional[pd.DataFrame]:
         # 数据预处理
         data = data.reset_index(drop=True)
         
-        # 获取实际列名
-        actual_columns = data.columns.tolist()
-        logger.debug(f"Stock {code} columns: {actual_columns}")
+        # 将'day'列重命名为'date'
+        data.rename(columns={'day': 'date'}, inplace=True)
         
-        # 创建标准列映射，根据位置而不是名称
-        if len(actual_columns) >= 6:
-            # 标准分钟数据应该有: 时间, 开盘, 收盘, 最高, 最低, 成交量
-            column_mapping = {}
-            for i, col_name in enumerate(actual_columns):
-                if i == 0:
-                    column_mapping[col_name] = 'date'
-                elif i == 1:
-                    column_mapping[col_name] = 'open'
-                elif i == 2:
-                    column_mapping[col_name] = 'close'
-                elif i == 3:
-                    column_mapping[col_name] = 'high'
-                elif i == 4:
-                    column_mapping[col_name] = 'low'
-                elif i == 5:
-                    column_mapping[col_name] = 'volume'
-                else:
-                    # 忽略其他列
-                    column_mapping[col_name] = f'ignore_{i}'
-            
-            # 重命名列
-            data = data.rename(columns=column_mapping)
-            
-            # 只保留我们需要的列，并将date重命名为day以匹配数据库结构
-            required_cols = ['date', 'open', 'close', 'high', 'low', 'volume']
-            available_cols = [col for col in required_cols if col in data.columns]
-            
-            if len(available_cols) < 6:
-                logger.warning(f"Missing required columns for {code}, available: {available_cols}")
-                return None
-                
-            data = data[required_cols]
-            data = data.rename(columns={'date': 'day'})
-            
-            # 添加股票代码和名称
-            data['name'] = code
-            data['rname'] = name
-            
-            # 确保数值类型正确
-            numeric_cols = ['open', 'close', 'high', 'low', 'volume']
-            for col in numeric_cols:
-                data[col] = pd.to_numeric(data[col], errors='coerce')
-            
-            # 检查是否有NaN值
-            if data[numeric_cols].isnull().any().any():
-                logger.warning(f"NaN values found in {code}, dropping rows with NaN")
-                data = data.dropna(subset=numeric_cols)
-                
-            return data
-        else:
-            logger.warning(f"Insufficient columns for {code}: {actual_columns}")
+        # 直接重命名预期的列，并保留它们
+        # ak.stock_zh_a_minute 的列名是固定的: day, open, close, high, low, volume
+        required_cols = ['date', 'open', 'close', 'high', 'low', 'volume']
+        
+        # 检查所需列是否存在
+        if not all(col in data.columns for col in required_cols):
+            logger.warning(f"Missing required columns for {code}, available: {data.columns.tolist()}")
             return None
+
+        data = data[required_cols]
+        
+        # 添加股票代码和名称
+        data['name'] = code
+        data['rname'] = name
+        
+        # 确保数值类型正确
+        numeric_cols = ['open', 'close', 'high', 'low', 'volume']
+        for col in numeric_cols:
+            data[col] = pd.to_numeric(data[col], errors='coerce')
+        
+        # 检查是否有NaN值
+        if data[numeric_cols].isnull().any().any():
+            logger.warning(f"NaN values found in {code}, dropping rows with NaN")
+            data = data.dropna(subset=numeric_cols)
+            
+        return data
             
     except Exception as e:
         logger.error(f"Error fetching data for {code}: {e}")
@@ -382,8 +355,9 @@ def get_stock_list() -> pd.DataFrame:
             
         # 标准化列名
         # 'trade' in stock_zh_a_spot corresponds to 'latest_price'
-        data = data.rename(columns={'trade': 'latest_price'})
-        
+        data = data.rename(columns={'代码': 'code'})
+        data = data.rename(columns={'名称': 'name'})
+        data = data.rename(columns={'昨收': 'latest_price'})
         # 应用过滤条件
         mask = (
             data['code'].apply(is_valid_a_share) &
