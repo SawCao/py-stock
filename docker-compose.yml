@@ -53,12 +53,10 @@ services:
 
   # Web前端服务 (UmiJS)
   web-ui:
-    build:
-      context: ./web/umi-stock
-      dockerfile: Dockerfile
+    image: sawcao/umi-stock-ui:latest
     container_name: stock-webui
     ports:
-      - "8089:9090"
+      - "8888:9090"
     environment:
       - NODE_ENV=production
       - REACT_APP_API_URL=http://localhost:5000
