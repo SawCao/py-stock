@@ -24,5 +24,5 @@ lxml==4.9.3
 python-dotenv==1.0.0
 schedule==1.2.0
 cryptography==45.0.5
-baostock==1.1.0
+baostock==0.8.9
 bs4==0.0.2
