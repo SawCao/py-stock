@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS stock_zh_a_daily (
     PRIMARY KEY (symbol, date)
 );
 
+CREATE UNIQUE INDEX idx_name_day ON stock_zh_a_daily(name, date);
+
 -- Create table for stock minute data optimized
 CREATE TABLE IF NOT EXISTS stock_zh_a_minute_ol_4 (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -50,7 +52,7 @@ CREATE TABLE IF NOT EXISTS stock_zh_a_minute_ol_4 (
 );
 
 -- Create indexes for better performance
-CREATE INDEX idx_name_day ON stock_zh_a_minute_ol_4(name, day);
+CREATE UNIQUE INDEX idx_name_day ON stock_zh_a_minute_ol_4(name, day);
 CREATE INDEX idx_gain_5 ON stock_zh_a_minute_ol_4(Gain_5);
 CREATE INDEX idx_gain_6 ON stock_zh_a_minute_ol_4(Gain_6);
 CREATE INDEX idx_gain_7 ON stock_zh_a_minute_ol_4(Gain_7);

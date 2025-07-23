@@ -35,64 +35,11 @@ logger = logging.getLogger(__name__)
 # 创建调度器
 scheduler = BlockingScheduler(timezone=SCHEDULER_CONFIG['timezone'])
 
-class SMSNotifier:
-    """短信通知类 - 支持腾讯云和阿里云短信服务"""
-    
-    def __init__(self):
-        # 从环境变量获取配置
-        self.phone_numbers = os.getenv('SMS_PHONE_NUMBERS', '').split(',')
-        
-    def send_sms(self, message, phone_number=None):
-        """发送短信通知"""
-        try:
-            # 使用新的短信发送器
-            from sms_sender import get_sms_sender
-            sms = get_sms_sender()
-            
-            # 获取手机号列表
-            if phone_number:
-                phone_numbers = [phone_number]
-            else:
-                phone_numbers = [p for p in self.phone_numbers if p.strip()]
-            
-            if not phone_numbers:
-                logger.warning("没有配置有效的手机号")
-                return False
-            
-            # 根据短信服务类型发送
-            if hasattr(sms, 'send_sms'):
-                # 腾讯云SMS
-                template_param = {"message": message}
-                result = sms.send_sms(phone_numbers, template_param)
-                if result.get('success'):
-                    logger.info(f"短信发送成功: {phone_numbers}")
-                    return True
-                else:
-                    logger.error(f"短信发送失败: {result.get('message')}")
-                    return False
-            else:
-                # 简化SMS或其他
-                logger.info(f"使用简化短信发送器: {message}")
-                return sms.send(message, phone_numbers)
-                
-        except Exception as e:
-            logger.error(f"短信发送失败: {str(e)}")
-            return False
-    
-    def send_batch_sms(self, message):
-        """批量发送短信"""
-        return self.send_sms(message)
-
-# 创建短信通知实例
-#sms_notifier = SMSNotifier()
-
 def turnover_rise_job():
     """执行turnover_rise任务"""
     try:
         logger.info("开始执行turnover_rise任务...")
         
-        # 发送开始通知
-        #sms_notifier.send_batch_sms("股票数据更新任务开始执行 - turnover_rise")
         
         # 执行turnover_rise任务
         from jobs.turnover_rise import stat_all
@@ -100,8 +47,6 @@ def turnover_rise_job():
         
         logger.info("turnover_rise任务完成")
         
-        # 发送完成通知
-        #sms_notifier.send_batch_sms("股票数据更新任务执行完成 - turnover_rise")
         
     except Exception as e:
         error_msg = f"turnover_rise任务执行失败: {str(e)}"
@@ -113,19 +58,14 @@ def daily_job_dongcai_task():
     """执行daily_job_dongcai任务"""
     try:
         logger.info("开始执行daily_job_dongcai任务...")
-        
-        # 发送开始通知
-        #sms_notifier.send_batch_sms("股票数据更新任务开始执行 - daily_job_dongcai")
+    
         
         # 执行daily_job_dongcai任务
-        from jobs.daily_job_dongcai import stat_all
+        from jobs.daily_job_baostock_5min import stat_all
         current_time = datetime.now()
         stat_all(current_time)
         
         logger.info("daily_job_dongcai任务完成")
-        
-        # 发送完成通知
-        #sms_notifier.send_batch_sms("股票数据更新任务执行完成 - daily_job_dongcai")
         
     except Exception as e:
         error_msg = f"daily_job_dongcai任务执行失败: {str(e)}"
@@ -148,7 +88,7 @@ def combined_daily_task():
         
         # 再执行daily_job_dongcai
         logger.info("执行daily_job_dongcai任务...")
-        from jobs.daily_job_dongcai import stat_all as daily_job_main
+        from jobs.daily_job_dongcai_old import stat_all as daily_job_main
         daily_job_main(datetime.now())
         
         logger.info("每日股票数据更新任务全部完成")
@@ -205,13 +145,6 @@ def main():
     logger.info("=" * 60)
     logger.info("增强版Python定时任务调度器启动")
     logger.info("当前时间: %s", datetime.now())
-    
-    # 检查环境变量配置
-    phone_numbers = os.getenv('SMS_PHONE_NUMBERS', '')
-    if not phone_numbers:
-        logger.warning("警告: 未设置SMS_PHONE_NUMBERS环境变量，将无法发送短信通知")
-    else:
-        logger.info(f"已配置短信通知手机号: {phone_numbers}")
     
     # 配置所有任务
     setup_jobs()

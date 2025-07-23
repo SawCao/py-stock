@@ -85,7 +85,7 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
     connection = pymysql.connect(
         host='stock-mysql',
         user='stock_user',
-        password='stock_pass',
+        password='stock_pass_2024',
         database='stock_data',
         cursorclass=pymysql.cursors.DictCursor
     )

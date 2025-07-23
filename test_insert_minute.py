@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 import pandas as pd
 import numpy as np
-from jobs.daily_job_dongcai import insert_minute
+from jobs.daily_job_dongcai_old import insert_minute
 from libs import common
 
 class TestInsertMinute(unittest.TestCase):
