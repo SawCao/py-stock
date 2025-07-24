@@ -1,12 +1,2 @@
-# 股票数据定时任务
-# 每分钟运行一次分钟数据抓取
-* * * * * cd /app && python -m jobs.daily_job_dongcai >> /app/logs/cron.log 2>&1
-
-# 每小时运行一次小时数据更新
-0 * * * * cd /app && python -m jobs.turnover_rise >> /app/logs/cron.log 2>&1
-
-# 每天9:30运行开盘前数据准备
-30 9 * * 1-5 cd /app && python -m jobs.common >> /app/logs/cron.log 2>&1
-
-# 每天15:30运行收盘后数据整理
-30 15 * * 1-5 cd /app && python -m jobs.common >> /app/logs/cron.log 2>&1
+# 每天下午4点执行数据统计任务
+0 16 * * * /usr/bin/python3 /app/run_daily_jobs.py >> /app/log/cron.log 2>&1

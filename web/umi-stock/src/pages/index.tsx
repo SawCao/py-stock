@@ -44,6 +44,7 @@ const Index: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<StockData[]>([]);
   const [filteredData, setFilteredData] = useState<StockData[]>([]);
+  const [searchText, setSearchText] = useState('');
   const navigate = useNavigate();
 
   const gainTypeOptions = [
@@ -61,34 +62,20 @@ const Index: React.FC = () => {
 
   const columns: ColumnsType<StockData> = [
     {
-      title: '股票代码',
-      dataIndex: 't2name',
-      key: 't2name',
-      fixed: 'left',
-      width: 100,
-      render: (text: string) => (
-        <Button 
-          type="link" 
-          onClick={() => navigate(`/stock/${text}`)}
-          style={{ padding: 0 }}
-        >
-          {text}
-        </Button>
-      ),
-    },
-    {
-      title: '股票名称',
+      title: '股票',
       dataIndex: 'rname',
       key: 'rname',
-      width: 120,
+      fixed: 'left',
+      width: 60,
       render: (text: string, record: StockData) => (
-        <Button 
-          type="link" 
+        <div
           onClick={() => navigate(`/stock/${record.t2name}`)}
-          style={{ padding: 0 }}
+          style={{ cursor: 'pointer', color: '#1890ff' }}
         >
           {text}
-        </Button>
+          <br />
+          ({record.t2name})
+        </div>
       ),
     },
     {
@@ -96,14 +83,15 @@ const Index: React.FC = () => {
       dataIndex: 'gain_Amplitude_num',
       key: 'gain_Amplitude_num',
       sorter: (a, b) => a.gain_Amplitude_num - b.gain_Amplitude_num,
-      width: 100,
+      width: 60,
+      fixed: 'left',
     },
     {
       title: '价格差值比例',
       dataIndex: 'price_diff',
       key: 'price_diff',
       render: (text) => (
-        <Tag color={text.startsWith('-') ? 'red' : 'green'}>{text}</Tag>
+        <Tag color={text.startsWith('-') ? 'green' : 'red'}>{text}</Tag>
       ),
       width: 120,
     },
@@ -112,7 +100,7 @@ const Index: React.FC = () => {
       dataIndex: 'volume_diff',
       key: 'volume_diff',
       render: (text) => (
-        <Tag color={text.startsWith('-') ? 'red' : 'green'}>{text}</Tag>
+        <Tag color={text.startsWith('-') ? 'green' : 'red'}>{text}</Tag>
       ),
       width: 120,
     },
@@ -167,24 +155,23 @@ const Index: React.FC = () => {
     {
       title: '操作',
       key: 'action',
-      fixed: 'right',
       width: 150,
       render: (_, record) => (
         <Space>
-          <Button 
-            type="primary" 
-            size="small" 
+          <Button
+            type="primary"
+            size="small"
             icon={<ExportOutlined />}
-            href={record.url_1} 
+            href={record.url_1}
             target="_blank"
           >
             东财
           </Button>
-          <Button 
-            type="default" 
-            size="small" 
+          <Button
+            type="default"
+            size="small"
             icon={<ExportOutlined />}
-            href={record.url_2} 
+            href={record.url_2}
             target="_blank"
           >
             同花顺
@@ -228,6 +215,16 @@ const Index: React.FC = () => {
     fetchData(params);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchText(value);
+    const filtered = data.filter(item =>
+      item.rname.toLowerCase().includes(value.toLowerCase()) ||
+      item.t2name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
   useEffect(() => {
     // 初始加载数据
     const initialParams = {
@@ -253,7 +250,16 @@ const Index: React.FC = () => {
       </div>
       <Card className="search-card">
         <Form form={form} onFinish={onFinish} layout="inline">
-          <Row gutter={16}>
+          <Row gutter={16} style={{ width: '100%' }}>
+            <Col xs={24} sm={12} md={6}>
+              <Form.Item name="stock_filter" label="股票名称/代码">
+                <Input
+                  placeholder="请输入名称或代码"
+                  value={searchText}
+                  onChange={handleSearch}
+                />
+              </Form.Item>
+            </Col>
             <Col xs={24} sm={12} md={6}>
               <Form.Item name="gain_threshold" label="筛选率">
                 <Input placeholder="请输入筛选率" />
@@ -261,8 +267,8 @@ const Index: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={8}>
               <Form.Item name="dateRange" label="时间段">
-                <RangePicker 
-                  showTime 
+                <RangePicker
+                  showTime
                   format="YYYY-MM-DD HH:mm:ss"
                   style={{ width: '100%' }}
                 />

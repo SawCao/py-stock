@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 # 复制源代码
-COPY . .
+COPY --from=builder /app/dist /etc/nginx/html
 
 # 构建应用
 RUN npm run build
