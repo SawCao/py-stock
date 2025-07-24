@@ -63,6 +63,7 @@ services:
     # depends_on:
     #   - web-backend
     volumes:
+      - ./web/umi-stock/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./web/umi-stock/logs:/app/logs
     networks:
       - stock-network

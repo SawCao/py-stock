@@ -6,7 +6,7 @@ import numpy as np
 import time
 import os
 from datetime import datetime, timedelta
-import daily_job_baostock_5min
+from . import daily_job_baostock_5min
 
 # 使用环境变量获得数据库。兼容开发模式可docker模式。
 MYSQL_HOST = os.environ.get('MYSQL_HOST') if (os.environ.get('MYSQL_HOST') != None) else "127.0.0.1"
@@ -187,4 +187,3 @@ def stat_all():
         print(e)
         
 
-stat_all()
