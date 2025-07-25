@@ -24,7 +24,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-container">
-      <Card className="login-card" title="股票数据系统登录">
+      <Card className="login-card" title="帮赛系统登录">
         <Form
           name="login"
           onFinish={onFinish}
