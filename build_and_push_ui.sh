@@ -19,7 +19,7 @@ echo "=================================================="
 echo "开始构建 Docker 镜像: ${FULL_IMAGE_NAME}"
 echo "=================================================="
 
-docker build -t "${FULL_IMAGE_NAME}" -f "${DOCKERFILE_PATH}" "${CONTEXT_PATH}"
+docker build --no-cache --pull -t "${FULL_IMAGE_NAME}" -f "${DOCKERFILE_PATH}" "${CONTEXT_PATH}"
 
 if [ $? -ne 0 ]; then
     echo "❌ Docker 镜像构建失败。"

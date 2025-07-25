@@ -1,2 +1,2 @@
 # 每天下午4点执行数据统计任务
-0 16 * * * /usr/local/bin/python /app/run_daily_jobs.py >> /app/log/cron.log 2>&1
+0 21 * * * /usr/local/bin/python /app/run_daily_jobs.py >> /app/log/cron.log 2>&1

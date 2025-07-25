@@ -4,10 +4,10 @@ WORKDIR /app
 
 # 复制package文件
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
 
 # 复制源代码
-COPY --from=builder /app/dist /etc/nginx/html
+COPY . .
 
 # 构建应用
 RUN npm run build

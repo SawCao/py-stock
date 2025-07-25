@@ -83,6 +83,7 @@ const Index: React.FC = () => {
       dataIndex: 'gain_Amplitude_num',
       key: 'gain_Amplitude_num',
       sorter: (a, b) => a.gain_Amplitude_num - b.gain_Amplitude_num,
+      defaultSortOrder: 'descend',
       width: 60,
       fixed: 'left',
     },
@@ -153,7 +154,7 @@ const Index: React.FC = () => {
       width: 140,
     },
     {
-      title: '操作',
+      title: '跳转',
       key: 'action',
       width: 150,
       render: (_, record) => (
