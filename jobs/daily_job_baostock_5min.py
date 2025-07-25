@@ -6,7 +6,7 @@ A股分钟级数据收集与波动率计算系统
 """
 
 import re
-from . import common
+import common
 import sys
 import time
 import pandas as pd

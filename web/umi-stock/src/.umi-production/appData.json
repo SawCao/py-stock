@@ -35,7 +35,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "preset",
@@ -48,7 +48,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 6
+        "register": 7
       },
       "enableBy": "register",
       "type": "preset",
@@ -62,10 +62,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            0
           ]
         },
-        "register": 3
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -79,7 +79,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            2
           ]
         },
         "register": 1
@@ -113,10 +113,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            7
+            6
           ]
         },
-        "register": 20
+        "register": 17
       },
       "enableBy": "register",
       "type": "plugin",
@@ -129,7 +129,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -146,10 +146,10 @@
             0
           ],
           "onCheck": [
-            1
+            0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -163,10 +163,10 @@
       "time": {
         "hooks": {
           "onCheck": [
-            0
+            1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1091,7 +1091,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 63
+        "register": 64
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1104,7 +1104,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 70
+        "register": 75
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1117,7 +1117,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 21
+        "register": 20
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1198,7 +1198,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1210,7 +1210,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1223,7 +1223,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1304,7 +1304,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1342,7 +1342,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1368,7 +1368,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1381,7 +1381,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1407,7 +1407,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 6
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1469,7 +1469,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1498,7 +1498,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1523,7 +1523,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1536,7 +1536,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 3
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1573,7 +1573,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1586,7 +1586,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1599,7 +1599,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 28
+        "register": 32
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1612,7 +1612,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 25
+        "register": 28
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1624,7 +1624,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1637,7 +1637,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1676,7 +1676,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1689,7 +1689,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1741,7 +1741,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1754,7 +1754,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1767,7 +1767,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1780,7 +1780,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1793,7 +1793,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1819,7 +1819,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1832,7 +1832,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1845,7 +1845,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1858,7 +1858,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 17
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1911,13 +1911,13 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            2
           ],
           "modifyAppData": [
             0
           ]
         },
-        "register": 5
+        "register": 4
       },
       "type": "plugin",
       "path": "C:/code/py-stock-2/py-stock/web/umi-stock/node_modules/@umijs/plugins/dist/antd.js",
@@ -2950,7 +2950,7 @@
       "file": "@/pages/index.tsx",
       "id": "2",
       "absPath": "/index",
-      "__content": "import React, { useState, useEffect } from 'react';\r\nimport { \r\n  Card, \r\n  Form, \r\n  Input, \r\n  Select, \r\n  DatePicker, \r\n  Button, \r\n  Table, \r\n  Space, \r\n  Tag,\r\n  Spin,\r\n  Row,\r\n  Col,\r\n  message \r\n} from 'antd';\r\nimport { SearchOutlined, ExportOutlined } from '@ant-design/icons';\r\nimport type { ColumnsType } from 'antd/es/table';\r\nimport { useNavigate } from 'umi';\r\nimport dayjs from 'dayjs';\r\nimport './index.less';\r\n\r\nconst { RangePicker } = DatePicker;\r\nconst { Option } = Select;\r\n\r\ninterface StockData {\r\n  t2name: string;\r\n  rname: string;\r\n  gain_Amplitude_num: number;\r\n  price_diff: string;\r\n  volume_diff: string;\r\n  gain_start_date: string;\r\n  gain_end_date: string;\r\n  market: string;\r\n  industry: string;\r\n  num_rise_continue_5day: number;\r\n  num_turnover_rate_gt_015: number;\r\n  url_1: string;\r\n  url_2: string;\r\n}\r\n\r\nconst Index: React.FC = () => {\r\n  const [form] = Form.useForm();\r\n  const [loading, setLoading] = useState(false);\r\n  const [data, setData] = useState<StockData[]>([]);\r\n  const [filteredData, setFilteredData] = useState<StockData[]>([]);\r\n  const navigate = useNavigate();\r\n\r\n  const gainTypeOptions = [\r\n    { value: 'Gain_5', label: '5分钟' },\r\n    { value: 'Gain_6', label: '6分钟' },\r\n    { value: 'Gain_7', label: '7分钟' },\r\n    { value: 'Gain_8', label: '8分钟' },\r\n    { value: 'Gain_9', label: '9分钟' },\r\n    { value: 'Gain_10', label: '10分钟' },\r\n    { value: 'Gain_15', label: '15分钟' },\r\n    { value: 'Gain_20', label: '20分钟' },\r\n    { value: 'Gain_30', label: '30分钟' },\r\n    { value: 'Gain_60', label: '60分钟' },\r\n  ];\r\n\r\n  const columns: ColumnsType<StockData> = [\r\n    {\r\n      title: '股票代码',\r\n      dataIndex: 't2name',\r\n      key: 't2name',\r\n      fixed: 'left',\r\n      width: 100,\r\n      render: (text: string) => (\r\n        <Button \r\n          type=\"link\" \r\n          onClick={() => navigate(`/stock/${text}`)}\r\n          style={{ padding: 0 }}\r\n        >\r\n          {text}\r\n        </Button>\r\n      ),\r\n    },\r\n    {\r\n      title: '股票名称',\r\n      dataIndex: 'rname',\r\n      key: 'rname',\r\n      width: 120,\r\n      render: (text: string, record: StockData) => (\r\n        <Button \r\n          type=\"link\" \r\n          onClick={() => navigate(`/stock/${record.t2name}`)}\r\n          style={{ padding: 0 }}\r\n        >\r\n          {text}\r\n        </Button>\r\n      ),\r\n    },\r\n    {\r\n      title: '筛选次数',\r\n      dataIndex: 'gain_Amplitude_num',\r\n      key: 'gain_Amplitude_num',\r\n      sorter: (a, b) => a.gain_Amplitude_num - b.gain_Amplitude_num,\r\n      width: 100,\r\n    },\r\n    {\r\n      title: '价格差值比例',\r\n      dataIndex: 'price_diff',\r\n      key: 'price_diff',\r\n      render: (text) => (\r\n        <Tag color={text.startsWith('-') ? 'red' : 'green'}>{text}</Tag>\r\n      ),\r\n      width: 120,\r\n    },\r\n    {\r\n      title: '成交量差值比例',\r\n      dataIndex: 'volume_diff',\r\n      key: 'volume_diff',\r\n      render: (text) => (\r\n        <Tag color={text.startsWith('-') ? 'red' : 'green'}>{text}</Tag>\r\n      ),\r\n      width: 120,\r\n    },\r\n    {\r\n      title: '最早筛选时间',\r\n      dataIndex: 'gain_start_date',\r\n      key: 'gain_start_date',\r\n      width: 180,\r\n    },\r\n    {\r\n      title: '最晚筛选时间',\r\n      dataIndex: 'gain_end_date',\r\n      key: 'gain_end_date',\r\n      width: 180,\r\n    },\r\n    {\r\n      title: '概念板块',\r\n      dataIndex: 'market',\r\n      key: 'market',\r\n      width: 120,\r\n      filters: Array.from(new Set(data.map(item => item.market))).map(market => ({\r\n        text: market,\r\n        value: market,\r\n      })),\r\n      onFilter: (value, record) => record.market === value,\r\n    },\r\n    {\r\n      title: '行业',\r\n      dataIndex: 'industry',\r\n      key: 'industry',\r\n      width: 120,\r\n      filters: Array.from(new Set(data.map(item => item.industry))).map(industry => ({\r\n        text: industry,\r\n        value: industry,\r\n      })),\r\n      onFilter: (value, record) => record.industry === value,\r\n    },\r\n    {\r\n      title: '连续5天上涨天数',\r\n      dataIndex: 'num_rise_continue_5day',\r\n      key: 'num_rise_continue_5day',\r\n      sorter: (a, b) => a.num_rise_continue_5day - b.num_rise_continue_5day,\r\n      width: 140,\r\n    },\r\n    {\r\n      title: '换手率>15%天数',\r\n      dataIndex: 'num_turnover_rate_gt_015',\r\n      key: 'num_turnover_rate_gt_015',\r\n      sorter: (a, b) => a.num_turnover_rate_gt_015 - b.num_turnover_rate_gt_015,\r\n      width: 140,\r\n    },\r\n    {\r\n      title: '操作',\r\n      key: 'action',\r\n      fixed: 'right',\r\n      width: 150,\r\n      render: (_, record) => (\r\n        <Space>\r\n          <Button \r\n            type=\"primary\" \r\n            size=\"small\" \r\n            icon={<ExportOutlined />}\r\n            href={record.url_1} \r\n            target=\"_blank\"\r\n          >\r\n            东财\r\n          </Button>\r\n          <Button \r\n            type=\"default\" \r\n            size=\"small\" \r\n            icon={<ExportOutlined />}\r\n            href={record.url_2} \r\n            target=\"_blank\"\r\n          >\r\n            同花顺\r\n          </Button>\r\n        </Space>\r\n      ),\r\n    },\r\n  ];\r\n\r\n  const fetchData = async (params: any) => {\r\n    setLoading(true);\r\n    try {\r\n      const queryParams = new URLSearchParams({\r\n        gain_threshold: params.gain_threshold || '0.03',\r\n        start_date: params.start_date || dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),\r\n        end_date: params.end_date || dayjs().format('YYYY-MM-DD HH:mm:ss'),\r\n        gain_type: params.gain_type || 'Gain_5',\r\n      });\r\n\r\n      const response = await fetch(`/api/stock_data?${queryParams}`);\r\n      const result = await response.json();\r\n      \r\n      setData(result);\r\n      setFilteredData(result);\r\n    } catch (error) {\r\n      message.error('获取数据失败，请稍后重试');\r\n      console.error('Error fetching data:', error);\r\n    } finally {\r\n      setLoading(false);\r\n    }\r\n  };\r\n\r\n  const onFinish = (values: any) => {\r\n    const params = {\r\n      gain_threshold: values.gain_threshold,\r\n      start_date: values.dateRange[0].format('YYYY-MM-DD HH:mm:ss'),\r\n      end_date: values.dateRange[1].format('YYYY-MM-DD HH:mm:ss'),\r\n      gain_type: values.gain_type,\r\n    };\r\n    \r\n    fetchData(params);\r\n  };\r\n\r\n  useEffect(() => {\r\n    // 初始加载数据\r\n    const initialParams = {\r\n      gain_threshold: '0.03',\r\n      start_date: dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),\r\n      end_date: dayjs().format('YYYY-MM-DD HH:mm:ss'),\r\n      gain_type: 'Gain_5',\r\n    };\r\n    fetchData(initialParams);\r\n    \r\n    // 设置表单初始值\r\n    form.setFieldsValue({\r\n      gain_threshold: '0.03',\r\n      dateRange: [dayjs().subtract(10, 'days'), dayjs()],\r\n      gain_type: 'Gain_5',\r\n    });\r\n  }, []);\r\n\r\n  return (\r\n    <div className=\"stock-container\">\r\n      <div className=\"system-banner\">\r\n        <h1>帮赛股票系统</h1>\r\n      </div>\r\n      <Card className=\"search-card\">\r\n        <Form form={form} onFinish={onFinish} layout=\"inline\">\r\n          <Row gutter={16}>\r\n            <Col xs={24} sm={12} md={6}>\r\n              <Form.Item name=\"gain_threshold\" label=\"筛选率\">\r\n                <Input placeholder=\"请输入筛选率\" />\r\n              </Form.Item>\r\n            </Col>\r\n            <Col xs={24} sm={12} md={8}>\r\n              <Form.Item name=\"dateRange\" label=\"时间段\">\r\n                <RangePicker \r\n                  showTime \r\n                  format=\"YYYY-MM-DD HH:mm:ss\"\r\n                  style={{ width: '100%' }}\r\n                />\r\n              </Form.Item>\r\n            </Col>\r\n            <Col xs={24} sm={12} md={6}>\r\n              <Form.Item name=\"gain_type\" label=\"筛选区间\">\r\n                <Select placeholder=\"请选择筛选区间\">\r\n                  {gainTypeOptions.map(option => (\r\n                    <Option key={option.value} value={option.value}>\r\n                      {option.label}\r\n                    </Option>\r\n                  ))}\r\n                </Select>\r\n              </Form.Item>\r\n            </Col>\r\n            <Col xs={24} sm={12} md={4}>\r\n              <Form.Item>\r\n                <Button type=\"primary\" htmlType=\"submit\" icon={<SearchOutlined />}>\r\n                  查询\r\n                </Button>\r\n              </Form.Item>\r\n            </Col>\r\n          </Row>\r\n        </Form>\r\n      </Card>\r\n\r\n      <Card className=\"table-card\">\r\n        <Spin spinning={loading}>\r\n          <Table\r\n            columns={columns}\r\n            dataSource={filteredData}\r\n            rowKey=\"t2name\"\r\n            scroll={{ x: 1500 }}\r\n            pagination={{\r\n              showSizeChanger: true,\r\n              showQuickJumper: true,\r\n              showTotal: (total) => `共 ${total} 条记录`,\r\n              pageSizeOptions: [10, 20, 50, 100],\r\n              defaultPageSize: 50,\r\n            }}\r\n          />\r\n        </Spin>\r\n      </Card>\r\n    </div>\r\n  );\r\n};\r\n\r\nexport default Index;\r\n",
+      "__content": "import React, { useState, useEffect } from 'react';\r\nimport { \r\n  Card, \r\n  Form, \r\n  Input, \r\n  Select, \r\n  DatePicker, \r\n  Button, \r\n  Table, \r\n  Space, \r\n  Tag,\r\n  Spin,\r\n  Row,\r\n  Col,\r\n  message \r\n} from 'antd';\r\nimport { SearchOutlined, ExportOutlined } from '@ant-design/icons';\r\nimport type { ColumnsType } from 'antd/es/table';\r\nimport { useNavigate } from 'umi';\r\nimport dayjs from 'dayjs';\r\nimport './index.less';\r\n\r\nconst { RangePicker } = DatePicker;\r\nconst { Option } = Select;\r\n\r\ninterface StockData {\r\n  t2name: string;\r\n  rname: string;\r\n  gain_Amplitude_num: number;\r\n  price_diff: string;\r\n  volume_diff: string;\r\n  gain_start_date: string;\r\n  gain_end_date: string;\r\n  market: string;\r\n  industry: string;\r\n  num_rise_continue_5day: number;\r\n  num_turnover_rate_gt_015: number;\r\n  url_1: string;\r\n  url_2: string;\r\n}\r\n\r\nconst Index: React.FC = () => {\r\n  const [form] = Form.useForm();\r\n  const [loading, setLoading] = useState(false);\r\n  const [data, setData] = useState<StockData[]>([]);\r\n  const [filteredData, setFilteredData] = useState<StockData[]>([]);\r\n  const [searchText, setSearchText] = useState('');\r\n  const navigate = useNavigate();\r\n\r\n  const gainTypeOptions = [\r\n    { value: 'Gain_5', label: '5分钟' },\r\n    { value: 'Gain_6', label: '6分钟' },\r\n    { value: 'Gain_7', label: '7分钟' },\r\n    { value: 'Gain_8', label: '8分钟' },\r\n    { value: 'Gain_9', label: '9分钟' },\r\n    { value: 'Gain_10', label: '10分钟' },\r\n    { value: 'Gain_15', label: '15分钟' },\r\n    { value: 'Gain_20', label: '20分钟' },\r\n    { value: 'Gain_30', label: '30分钟' },\r\n    { value: 'Gain_60', label: '60分钟' },\r\n  ];\r\n\r\n  const columns: ColumnsType<StockData> = [\r\n    {\r\n      title: '股票',\r\n      dataIndex: 'rname',\r\n      key: 'rname',\r\n      fixed: 'left',\r\n      width: 60,\r\n      render: (text: string, record: StockData) => (\r\n        <div\r\n          onClick={() => navigate(`/stock/${record.t2name}`)}\r\n          style={{ cursor: 'pointer', color: '#1890ff' }}\r\n        >\r\n          {text}\r\n          <br />\r\n          ({record.t2name})\r\n        </div>\r\n      ),\r\n    },\r\n    {\r\n      title: '筛选次数',\r\n      dataIndex: 'gain_Amplitude_num',\r\n      key: 'gain_Amplitude_num',\r\n      sorter: (a, b) => a.gain_Amplitude_num - b.gain_Amplitude_num,\r\n      defaultSortOrder: 'descend',\r\n      width: 60,\r\n      fixed: 'left',\r\n    },\r\n    {\r\n      title: '价格差值比例',\r\n      dataIndex: 'price_diff',\r\n      key: 'price_diff',\r\n      render: (text) => (\r\n        <Tag color={text.startsWith('-') ? 'green' : 'red'}>{text}</Tag>\r\n      ),\r\n      width: 120,\r\n    },\r\n    {\r\n      title: '成交量差值比例',\r\n      dataIndex: 'volume_diff',\r\n      key: 'volume_diff',\r\n      render: (text) => (\r\n        <Tag color={text.startsWith('-') ? 'green' : 'red'}>{text}</Tag>\r\n      ),\r\n      width: 120,\r\n    },\r\n    {\r\n      title: '最早筛选时间',\r\n      dataIndex: 'gain_start_date',\r\n      key: 'gain_start_date',\r\n      width: 180,\r\n    },\r\n    {\r\n      title: '最晚筛选时间',\r\n      dataIndex: 'gain_end_date',\r\n      key: 'gain_end_date',\r\n      width: 180,\r\n    },\r\n    {\r\n      title: '概念板块',\r\n      dataIndex: 'market',\r\n      key: 'market',\r\n      width: 120,\r\n      filters: Array.from(new Set(data.map(item => item.market))).map(market => ({\r\n        text: market,\r\n        value: market,\r\n      })),\r\n      onFilter: (value, record) => record.market === value,\r\n    },\r\n    {\r\n      title: '行业',\r\n      dataIndex: 'industry',\r\n      key: 'industry',\r\n      width: 120,\r\n      filters: Array.from(new Set(data.map(item => item.industry))).map(industry => ({\r\n        text: industry,\r\n        value: industry,\r\n      })),\r\n      onFilter: (value, record) => record.industry === value,\r\n    },\r\n    {\r\n      title: '连续5天上涨天数',\r\n      dataIndex: 'num_rise_continue_5day',\r\n      key: 'num_rise_continue_5day',\r\n      sorter: (a, b) => a.num_rise_continue_5day - b.num_rise_continue_5day,\r\n      width: 140,\r\n    },\r\n    {\r\n      title: '换手率>15%天数',\r\n      dataIndex: 'num_turnover_rate_gt_015',\r\n      key: 'num_turnover_rate_gt_015',\r\n      sorter: (a, b) => a.num_turnover_rate_gt_015 - b.num_turnover_rate_gt_015,\r\n      width: 140,\r\n    },\r\n    {\r\n      title: '跳转',\r\n      key: 'action',\r\n      width: 150,\r\n      render: (_, record) => (\r\n        <Space>\r\n          <Button\r\n            type=\"primary\"\r\n            size=\"small\"\r\n            icon={<ExportOutlined />}\r\n            href={record.url_1}\r\n            target=\"_blank\"\r\n          >\r\n            东财\r\n          </Button>\r\n          <Button\r\n            type=\"default\"\r\n            size=\"small\"\r\n            icon={<ExportOutlined />}\r\n            href={record.url_2}\r\n            target=\"_blank\"\r\n          >\r\n            同花顺\r\n          </Button>\r\n        </Space>\r\n      ),\r\n    },\r\n  ];\r\n\r\n  const fetchData = async (params: any) => {\r\n    setLoading(true);\r\n    try {\r\n      const queryParams = new URLSearchParams({\r\n        gain_threshold: params.gain_threshold || '0.03',\r\n        start_date: params.start_date || dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),\r\n        end_date: params.end_date || dayjs().format('YYYY-MM-DD HH:mm:ss'),\r\n        gain_type: params.gain_type || 'Gain_5',\r\n      });\r\n\r\n      const response = await fetch(`/api/stock_data?${queryParams}`);\r\n      const result = await response.json();\r\n      \r\n      setData(result);\r\n      setFilteredData(result);\r\n    } catch (error) {\r\n      message.error('获取数据失败，请稍后重试');\r\n      console.error('Error fetching data:', error);\r\n    } finally {\r\n      setLoading(false);\r\n    }\r\n  };\r\n\r\n  const onFinish = (values: any) => {\r\n    const params = {\r\n      gain_threshold: values.gain_threshold,\r\n      start_date: values.dateRange[0].format('YYYY-MM-DD HH:mm:ss'),\r\n      end_date: values.dateRange[1].format('YYYY-MM-DD HH:mm:ss'),\r\n      gain_type: values.gain_type,\r\n    };\r\n    \r\n    fetchData(params);\r\n  };\r\n\r\n  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {\r\n    const value = e.target.value;\r\n    setSearchText(value);\r\n    const filtered = data.filter(item =>\r\n      item.rname.toLowerCase().includes(value.toLowerCase()) ||\r\n      item.t2name.toLowerCase().includes(value.toLowerCase())\r\n    );\r\n    setFilteredData(filtered);\r\n  };\r\n\r\n  useEffect(() => {\r\n    // 初始加载数据\r\n    const initialParams = {\r\n      gain_threshold: '0.03',\r\n      start_date: dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),\r\n      end_date: dayjs().format('YYYY-MM-DD HH:mm:ss'),\r\n      gain_type: 'Gain_5',\r\n    };\r\n    fetchData(initialParams);\r\n    \r\n    // 设置表单初始值\r\n    form.setFieldsValue({\r\n      gain_threshold: '0.03',\r\n      dateRange: [dayjs().subtract(10, 'days'), dayjs()],\r\n      gain_type: 'Gain_5',\r\n    });\r\n  }, []);\r\n\r\n  return (\r\n    <div className=\"stock-container\">\r\n      <div className=\"system-banner\">\r\n        <h1>帮赛股票系统</h1>\r\n      </div>\r\n      <Card className=\"search-card\">\r\n        <Form form={form} onFinish={onFinish} layout=\"inline\">\r\n          <Row gutter={16} style={{ width: '100%' }}>\r\n            <Col xs={24} sm={12} md={6}>\r\n              <Form.Item name=\"stock_filter\" label=\"股票名称/代码\">\r\n                <Input\r\n                  placeholder=\"请输入名称或代码\"\r\n                  value={searchText}\r\n                  onChange={handleSearch}\r\n                />\r\n              </Form.Item>\r\n            </Col>\r\n            <Col xs={24} sm={12} md={6}>\r\n              <Form.Item name=\"gain_threshold\" label=\"筛选率\">\r\n                <Input placeholder=\"请输入筛选率\" />\r\n              </Form.Item>\r\n            </Col>\r\n            <Col xs={24} sm={12} md={8}>\r\n              <Form.Item name=\"dateRange\" label=\"时间段\">\r\n                <RangePicker\r\n                  showTime\r\n                  format=\"YYYY-MM-DD HH:mm:ss\"\r\n                  style={{ width: '100%' }}\r\n                />\r\n              </Form.Item>\r\n            </Col>\r\n            <Col xs={24} sm={12} md={6}>\r\n              <Form.Item name=\"gain_type\" label=\"筛选区间\">\r\n                <Select placeholder=\"请选择筛选区间\">\r\n                  {gainTypeOptions.map(option => (\r\n                    <Option key={option.value} value={option.value}>\r\n                      {option.label}\r\n                    </Option>\r\n                  ))}\r\n                </Select>\r\n              </Form.Item>\r\n            </Col>\r\n            <Col xs={24} sm={12} md={4}>\r\n              <Form.Item>\r\n                <Button type=\"primary\" htmlType=\"submit\" icon={<SearchOutlined />}>\r\n                  查询\r\n                </Button>\r\n              </Form.Item>\r\n            </Col>\r\n          </Row>\r\n        </Form>\r\n      </Card>\r\n\r\n      <Card className=\"table-card\">\r\n        <Spin spinning={loading}>\r\n          <Table\r\n            columns={columns}\r\n            dataSource={filteredData}\r\n            rowKey=\"t2name\"\r\n            scroll={{ x: 1500 }}\r\n            pagination={{\r\n              showSizeChanger: true,\r\n              showQuickJumper: true,\r\n              showTotal: (total) => `共 ${total} 条记录`,\r\n              pageSizeOptions: [10, 20, 50, 100],\r\n              defaultPageSize: 50,\r\n            }}\r\n          />\r\n        </Spin>\r\n      </Card>\r\n    </div>\r\n  );\r\n};\r\n\r\nexport default Index;\r\n",
       "__isJSFile": true,
       "__absFile": "C:/code/py-stock-2/py-stock/web/umi-stock/src/pages/index.tsx"
     },
