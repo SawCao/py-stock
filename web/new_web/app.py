@@ -227,11 +227,21 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
 
 def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end_date, gain_type):
     logging.info('Performing fuzzy search with string: %s', search_string)
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch dev
+# Your branch is up to date with 'origin/dev'.
+#
+# Changes to be committed:
+#	modified:   web/new_web/app.py
+#
+
     # Connect to the database
     connection = pymysql.connect(
-        host='127.0.0.1',
+        host='stock-mysql',
         user='stock_user',
-        password='stock_pass',
+        password='stock_pass_2024',
         database='stock_data',
         cursorclass=pymysql.cursors.DictCursor
     )
