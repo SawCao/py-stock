@@ -52,12 +52,12 @@ def get_stock_data():
         file_age_seconds = time.time() - os.path.getmtime("data_cache.pickle")
         if file_age_seconds < 60 * 60 * 24:  # 24 hours
             data_dict = load_data_from_file()
-            print("Cache file data is still fresh.")
+            logging.info("Cache file data is still fresh.")
             return data_dict
     pro = ts.pro_api('0a42c03559605acecb58cca7218b5f6736f1ea878e20a090b2077bdf')
     data_dict = pro.stock_basic().set_index("symbol").to_dict("index")
     save_data_to_file(data_dict)
-    print("Data has been fetched and saved to cache.")
+    logging.info("Data has been fetched and saved to cache.")
     return data_dict
 
 # 缓存每日结果数据
@@ -75,16 +75,16 @@ def load_resdata_from_file(gain_threshold, start_date, end_date, gain_type):
 
 def get_stock_resdata(gain_threshold, start_date, end_date, gain_type):
     file_name = str(gain_threshold) + "_" + str(start_date[:10]) + "_" + str(end_date[:10]) + "_" + str(gain_type) + "_data.pickle"
-    print("file_name" + file_name)
+    logging.info("file_name" + file_name)
     if os.path.isfile(file_name):
         file_age_seconds = time.time() - os.path.getmtime(file_name)
         if file_age_seconds < 60 * 60 * 24:  # 24 hours
             data_dict = load_resdata_from_file(gain_threshold, start_date, end_date, gain_type)
-            print("Cache file data is still fresh.")
+            logging.info("Cache file data is still fresh.")
             return data_dict
     res = get_stock_from_db(gain_threshold, start_date, end_date, gain_type)
     save_resdata_to_file(gain_threshold, start_date, end_date, gain_type,res)
-    print("Data has been fetched and saved to cache.")
+    logging.info("Data has been fetched and saved to cache.")
     return res
 
 
@@ -120,19 +120,19 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
             """ % (str(gain_type), str(gain_threshold), start_date, end_date)
             
             cursor.execute(query)
-            print(cursor.mogrify(query))
+            logging.info(cursor.mogrify(query))
             results = cursor.fetchall()
             response_dict = {}  # 存储结果的字典
-            print("TEST", results)
+            logging.info("TEST", results)
             response = []
             end_time = time.time()
-            print(f"查询震荡，执行时间为 {end_time - start_time:.6f} 秒")
+            logging.info(f"查询震荡，执行时间为 {end_time - start_time:.6f} 秒")
             try:
                 all_stock_info = get_stock_data()
             except:
                 all_stock_info = {}
             else:
-                print("读取成功！")
+                logging.info("读取成功！")
             # Load all stock data from tushare into a dictionary
             # data_dict = pro.stock_basic().set_index('symbol').to_dict('index')  # 将df转换为字典
             for result in results:
@@ -216,7 +216,7 @@ def get_stock_from_db(gain_threshold, start_date, end_date, gain_type):
             results_sorted = sorted(results, key=lambda x: x['t2name'])
             response_sorted = sorted(response_dict.values(), key=lambda x: x['t2name'])
             end_time = time.time()
-            print(f"总查询时间，执行时间为 {end_time - start_time:.6f} 秒")
+            logging.info(f"总查询时间，执行时间为 {end_time - start_time:.6f} 秒")
             # 将两个列表合并为一个列表
             response = [dict(r.items()) for r in response_sorted]
 
@@ -229,9 +229,9 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
     logging.info('Performing fuzzy search with string: %s', search_string)
     # Connect to the database
     connection = pymysql.connect(
-        host='stock-mysql',
+        host='127.0.0.1',
         user='stock_user',
-        password='stock_pass_2024',
+        password='stock_pass',
         database='stock_data',
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -260,20 +260,20 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
             
             search_pattern = f"%{search_string}%"
             cursor.execute(query, (gain_threshold, start_date, end_date, search_pattern, search_pattern))
-            print(cursor.mogrify(query))
+            logging.info(cursor.mogrify(query))
             results = cursor.fetchall()
             response_dict = {}  # 存储结果的字典
-            print("TEST", results)
+            logging.info("TEST", results)
             response = []
             end_time = time.time()
-            print(f"查询震荡，执行时间为 {end_time - start_time:.6f} 秒")
+            logging.info(f"查询震荡，执行时间为 {end_time - start_time:.6f} 秒")
             try:
                 all_stock_info = get_stock_data()
-                print("all_stock_info", all_stock_info)
+                logging.info("all_stock_info！")
             except:
                 all_stock_info = {}
             else:
-                print("读取成功！")
+                logging.info("读取成功！")
             # Load all stock data from tushare into a dictionary
             # data_dict = pro.stock_basic().set_index('symbol').to_dict('index')  # 将df转换为字典
             for result in results:
@@ -357,7 +357,7 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
             results_sorted = sorted(results, key=lambda x: x['t2name'])
             response_sorted = sorted(response_dict.values(), key=lambda x: x['t2name'])
             end_time = time.time()
-            print(f"总查询时间，执行时间为 {end_time - start_time:.6f} 秒")
+            logging.info(f"总查询时间，执行时间为 {end_time - start_time:.6f} 秒")
             # 将两个列表合并为一个列表
             response = [dict(r.items()) for r in response_sorted]
 
