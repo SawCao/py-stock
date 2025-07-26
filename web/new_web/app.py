@@ -235,7 +235,7 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
         database='stock_data',
         cursorclass=pymysql.cursors.DictCursor
     )
-    pro = ts.pro_api('0a42c03559605acecb58cca7218b5f6736f1ea878e20a090b2077bdf')
+    #pro = ts.pro_api('0a42c03559605acecb58cca7218b5f6736f1ea878e20a090b2077bdf')
     try:
         with connection.cursor() as cursor:
             # Get parameters from request
@@ -308,7 +308,7 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
                         symbol = %s
                         AND date BETWEEN %s AND %s;
                 """
-                cursor.execute(forth_query)
+                cursor.execute(forth_query, (result['t2name'], start_date, end_date))
                 forth_result = cursor.fetchone()
                 
                 code_tmp = result["t2name"]
