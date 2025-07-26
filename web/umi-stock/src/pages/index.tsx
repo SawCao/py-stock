@@ -43,7 +43,6 @@ const Index: React.FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<StockData[]>([]);
-  const [filteredData, setFilteredData] = useState<StockData[]>([]);
   const [searchText, setSearchText] = useState('');
   const navigate = useNavigate();
 
@@ -84,8 +83,46 @@ const Index: React.FC = () => {
       key: 'gain_Amplitude_num',
       sorter: (a, b) => a.gain_Amplitude_num - b.gain_Amplitude_num,
       defaultSortOrder: 'descend',
-      width: 60,
+      width: 50,
       fixed: 'left',
+    },
+    {
+      title: '概念板块',
+      dataIndex: 'market',
+      key: 'market',
+      width: 60,
+      filters: Array.from(new Set(data.map(item => item.market))).map(market => ({
+        text: market,
+        value: market,
+      })),
+      onFilter: (value, record) => record.market === value,
+    },
+        {
+      title: '跳转',
+      key: 'action',
+      width: 75,
+      render: (_, record) => (
+        <Space direction="vertical">
+          <Button
+            type="primary"
+            size="small"
+            icon={<ExportOutlined />}
+            href={record.url_1}
+            target="_blank"
+          >
+            东财
+          </Button>
+          <Button
+            type="default"
+            size="small"
+            icon={<ExportOutlined />}
+            href={record.url_2}
+            target="_blank"
+          >
+            同花顺
+          </Button>
+        </Space>
+      ),
     },
     {
       title: '价格差值比例',
@@ -94,7 +131,7 @@ const Index: React.FC = () => {
       render: (text) => (
         <Tag color={text.startsWith('-') ? 'green' : 'red'}>{text}</Tag>
       ),
-      width: 120,
+      width: 60,
     },
     {
       title: '成交量差值比例',
@@ -103,7 +140,7 @@ const Index: React.FC = () => {
       render: (text) => (
         <Tag color={text.startsWith('-') ? 'green' : 'red'}>{text}</Tag>
       ),
-      width: 120,
+      width: 60,
     },
     {
       title: '最早筛选时间',
@@ -116,17 +153,6 @@ const Index: React.FC = () => {
       dataIndex: 'gain_end_date',
       key: 'gain_end_date',
       width: 180,
-    },
-    {
-      title: '概念板块',
-      dataIndex: 'market',
-      key: 'market',
-      width: 120,
-      filters: Array.from(new Set(data.map(item => item.market))).map(market => ({
-        text: market,
-        value: market,
-      })),
-      onFilter: (value, record) => record.market === value,
     },
     {
       title: '行业',
@@ -153,33 +179,7 @@ const Index: React.FC = () => {
       sorter: (a, b) => a.num_turnover_rate_gt_015 - b.num_turnover_rate_gt_015,
       width: 140,
     },
-    {
-      title: '跳转',
-      key: 'action',
-      width: 150,
-      render: (_, record) => (
-        <Space>
-          <Button
-            type="primary"
-            size="small"
-            icon={<ExportOutlined />}
-            href={record.url_1}
-            target="_blank"
-          >
-            东财
-          </Button>
-          <Button
-            type="default"
-            size="small"
-            icon={<ExportOutlined />}
-            href={record.url_2}
-            target="_blank"
-          >
-            同花顺
-          </Button>
-        </Space>
-      ),
-    },
+
   ];
 
   const fetchData = async (params: any) => {
@@ -190,13 +190,13 @@ const Index: React.FC = () => {
         start_date: params.start_date || dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),
         end_date: params.end_date || dayjs().format('YYYY-MM-DD HH:mm:ss'),
         gain_type: params.gain_type || 'Gain_5',
+        search: params.search || '',
       });
 
-      const response = await fetch(`/api/stock_data?${queryParams}`);
+      const response = await fetch(`/api/stock_search?${queryParams}`);
       const result = await response.json();
       
       setData(result);
-      setFilteredData(result);
     } catch (error) {
       message.error('获取数据失败，请稍后重试');
       console.error('Error fetching data:', error);
@@ -211,6 +211,7 @@ const Index: React.FC = () => {
       start_date: values.dateRange[0].format('YYYY-MM-DD HH:mm:ss'),
       end_date: values.dateRange[1].format('YYYY-MM-DD HH:mm:ss'),
       gain_type: values.gain_type,
+      search: values.stock_filter,
     };
     
     fetchData(params);
@@ -219,11 +220,6 @@ const Index: React.FC = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchText(value);
-    const filtered = data.filter(item =>
-      item.rname.toLowerCase().includes(value.toLowerCase()) ||
-      item.t2name.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredData(filtered);
   };
 
   useEffect(() => {
@@ -233,6 +229,7 @@ const Index: React.FC = () => {
       start_date: dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),
       end_date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       gain_type: 'Gain_5',
+      search: '',
     };
     fetchData(initialParams);
     
@@ -247,7 +244,7 @@ const Index: React.FC = () => {
   return (
     <div className="stock-container">
       <div className="system-banner">
-        <h1>帮赛股票系统</h1>
+        <h1>帮赛系统</h1>
       </div>
       <Card className="search-card">
         <Form form={form} onFinish={onFinish} layout="inline">
@@ -256,7 +253,6 @@ const Index: React.FC = () => {
               <Form.Item name="stock_filter" label="股票名称/代码">
                 <Input
                   placeholder="请输入名称或代码"
-                  value={searchText}
                   onChange={handleSearch}
                 />
               </Form.Item>
@@ -301,7 +297,7 @@ const Index: React.FC = () => {
         <Spin spinning={loading}>
           <Table
             columns={columns}
-            dataSource={filteredData}
+            dataSource={data}
             rowKey="t2name"
             scroll={{ x: 1500 }}
             pagination={{

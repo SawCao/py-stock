@@ -6,7 +6,7 @@ import numpy as np
 import time
 import os
 from datetime import datetime, timedelta
-from . import daily_job_baostock_5min
+import daily_job_baostock_5min
 
 # 使用环境变量获得数据库。兼容开发模式可docker模式。
 MYSQL_HOST = os.environ.get('MYSQL_HOST') if (os.environ.get('MYSQL_HOST') != None) else "127.0.0.1"
@@ -170,6 +170,8 @@ def stat_all():
         
         for index, data in datas.iterrows():
             try:
+                if index % 100 == 0:
+                    bs.login()  # 确保每100个股票重新登录
                 #time.sleep(1)
                 print("start to update gain: " + str(data['code']))
                 # if data.iat[i, 1].startswith('60') or data.iat[i, 1].startswith('688'):

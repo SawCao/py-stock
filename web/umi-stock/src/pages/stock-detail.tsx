@@ -335,7 +335,7 @@ const StockDetail: React.FC = () => {
     return (
       <div className="stock-detail-container">
         <div className="system-banner">
-          <h1>帮赛股票系统 - 股票详情</h1>
+          <h1>帮赛系统 - 股票详情</h1>
         </div>
         <div className="loading-container">
           <Spin size="large" />
@@ -347,7 +347,7 @@ const StockDetail: React.FC = () => {
   return (
     <div className="stock-detail-container">
       <div className="system-banner">
-        <h1>帮赛股票系统 - 股票详情</h1>
+        <h1>帮赛系统 - 股票详情</h1>
       </div>
       
       <div className="detail-content">

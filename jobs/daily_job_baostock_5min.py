@@ -83,7 +83,7 @@ def is_valid_a_share(code: str) -> bool:
     """判断是否为有效A股代码"""
     if not code or not isinstance(code, str):
         return False
-    return not (STOCK_PATTERNS['b_share'].match(code) and STOCK_PATTERNS['bj_a'].match(code) and STOCK_PATTERNS['st'].match(code))
+    return not (STOCK_PATTERNS['b_share'].match(code) or STOCK_PATTERNS['bj_a'].match(code) or STOCK_PATTERNS['st'].match(code))
 
 def is_not_st_stock(name: str) -> bool:
     """过滤ST股票"""
@@ -428,7 +428,9 @@ def process_stocks_batch(stock_list: pd.DataFrame, use_concurrent: bool = True) 
                     
     else:
         # 串行处理
-        for _, row in stock_list.iterrows():
+        for index, row in stock_list.iterrows():
+            if index % 100 == 0:
+                bs.login()  # 确保每100个股票重新登录
             success = process_single_stock(row['code'], row['name'])
             if success:
                 results['success'] += 1
