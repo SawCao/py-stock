@@ -38,12 +38,12 @@ def search_stock_data():
 
 # 缓存tushare的板块数据，这个接口一个小时只能访问一次，坑爹
 def save_data_to_file(data_dict):
-    with open("data_cache.pickle", "wb") as f:
+    with open("/app/web/new_web/data_cache.pickle", "wb") as f:
         pickle.dump(data_dict, f)
-    os.utime("data_cache.pickle", (time.time(), time.time()))
+    os.utime("/app/web/new_web/data_cache.pickle", (time.time(), time.time()))
 
 def load_data_from_file():
-    with open("data_cache.pickle", "rb") as f:
+    with open("/app/web/new_web/data_cache.pickle", "rb") as f:
         data_dict = pickle.load(f)
     return data_dict
 
@@ -56,7 +56,7 @@ def get_stock_data():
             logging.info("Cache file data is still fresh.")
             return data_dict
     elif os.path.isfile("/app/web/new_web/data_cache.pickle"):
-        file_age_seconds = time.time() - os.path.getmtime("data_cache.pickle")
+        file_age_seconds = time.time() - os.path.getmtime("/app/web/new_web/data_cache.pickle")
         logging.error("/app/web/new_web/data_cache.pickle file_age_seconds: %s", file_age_seconds)
         if file_age_seconds < 60 * 60 * 24:  # 24 hours
             data_dict = load_data_from_file()
