@@ -18,13 +18,13 @@ def login():
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/stock_data', methods=['GET'])
-def get_stock_data():
-    gain_threshold = request.args.get('gain_threshold', default=0.03, type=float)
-    start_date = request.args.get('start_date', default='2023-01-31 00:00:00')
-    end_date = request.args.get('end_date', default='2023-01-31 00:00:00')
-    gain_type =  request.args.get('gain_type', default='Gain_5')
-    return get_stock_resdata(gain_threshold, start_date, end_date, gain_type)
+# @app.route('/stock_data', methods=['GET'])
+# def get_stock_data():
+#     gain_threshold = request.args.get('gain_threshold', default=0.03, type=float)
+#     start_date = request.args.get('start_date', default='2023-01-31 00:00:00')
+#     end_date = request.args.get('end_date', default='2023-01-31 00:00:00')
+#     gain_type =  request.args.get('gain_type', default='Gain_5')
+#     return get_stock_resdata(gain_threshold, start_date, end_date, gain_type)
 
 @app.route('/stock_search', methods=['GET'])
 def search_stock_data():
@@ -273,7 +273,6 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
             logging.info(cursor.mogrify(query))
             results = cursor.fetchall()
             response_dict = {}  # 存储结果的字典
-            logging.info("TEST", results)
             response = []
             end_time = time.time()
             logging.info(f"查询震荡，执行时间为 {end_time - start_time:.6f} 秒")
@@ -281,6 +280,7 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
                 all_stock_info = get_stock_data()
                 logging.info("all_stock_info！")
             except:
+                logging.error("读取tushare数据失败，使用本地缓存数据！")
                 all_stock_info = {}
             else:
                 logging.info("读取成功！")
