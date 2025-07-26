@@ -269,6 +269,7 @@ def get_stock_from_db_with_search(search_string, gain_threshold, start_date, end
             print(f"查询震荡，执行时间为 {end_time - start_time:.6f} 秒")
             try:
                 all_stock_info = get_stock_data()
+                print("all_stock_info", all_stock_info)
             except:
                 all_stock_info = {}
             else:
