@@ -13,6 +13,9 @@ DOCKERFILE_PATH="web/umi-stock/Dockerfile"
 CONTEXT_PATH="web/umi-stock/"
 
 # --- 脚本开始 ---
+export http_proxy="http://127.0.0.1:10809"
+export https_proxy="http://127.0.0.1:10809"
+
 set -e # 如果任何命令失败，则立即退出
 
 echo "=================================================="
