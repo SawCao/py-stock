@@ -50,6 +50,14 @@ def load_data_from_file():
 def get_stock_data():
     if os.path.isfile("data_cache.pickle"):
         file_age_seconds = time.time() - os.path.getmtime("data_cache.pickle")
+        logging.error("file_age_seconds: %s", file_age_seconds)
+        if file_age_seconds < 60 * 60 * 24:  # 24 hours
+            data_dict = load_data_from_file()
+            logging.info("Cache file data is still fresh.")
+            return data_dict
+    elif os.path.isfile("/app/web/new_web/data_cache.pickle"):
+        file_age_seconds = time.time() - os.path.getmtime("data_cache.pickle")
+        logging.error("/app/web/new_web/data_cache.pickle file_age_seconds: %s", file_age_seconds)
         if file_age_seconds < 60 * 60 * 24:  # 24 hours
             data_dict = load_data_from_file()
             logging.info("Cache file data is still fresh.")
