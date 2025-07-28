@@ -116,7 +116,9 @@ def fetch_minute_data(code: str, name: str) -> Optional[pd.DataFrame]:
     time.sleep(1)
     start_time = time.time()
     current_date = datetime.datetime.now()
-    start_date_str = (current_date - datetime.timedelta(days=3)).strftime("%Y-%m-%d")
+    #start_date_str = (current_date - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+    # 只取当前这一天
+    start_date_str = current_date.strftime("%Y-%m-%d")
     end_date_str = current_date.strftime("%Y-%m-%d")
     try:
         # 获取5分钟K线数据
