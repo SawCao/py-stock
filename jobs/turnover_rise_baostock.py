@@ -188,4 +188,4 @@ def stat_all():
     except Exception as e:
         print(e)
         
-
+stat_all()
