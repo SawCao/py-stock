@@ -1,3 +1,9 @@
-# 每天下午4点执行数据统计任务
-0 16 * * 1-5 source /app/.env && /usr/local/bin/python /app/jobs/daily_job_baostock_5min.py >> /app/log/cron_daily_job_baostock.log 2>&1
-0 17 * * 1-5 source /app/.env && /usr/local/bin/python /app/jobs/turnover_rise_baostock.py >> /app/log/cron_turnover_rise_baostock.log 2>&1
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# 每天下午4点执行数据统计任务（周一至周五）
+0 16 * * 1-5 root . /app/.env && /usr/bin/python3 /app/jobs/daily_job_baostock_5min.py >> /app/log/cron_daily_job_baostock.log 2>&1
+
+# 每天下午5点执行
+0 17 * * 1-5 root . /app/.env && /usr/bin/python3 /app/jobs/turnover_rise_baostock.py >> /app/log/cron_turnover_rise_baostock.log 2>&1
+

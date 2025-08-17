@@ -29,7 +29,7 @@ fi
 
 # 执行 docker-compose 命令来强制重新构建和部署指定的服务
 echo "正在重新构建和部署服务: $SERVICE"
-docker-compose up -d --force-recreate --no-deps --build "$SERVICE"
+docker compose up -d --force-recreate --no-deps --build "$SERVICE"
 
 if [ $? -eq 0 ]; then
   echo "服务 '$SERVICE' 已成功重新部署。"

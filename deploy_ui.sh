@@ -17,7 +17,7 @@ echo "正在拉取最新的UI镜像: $IMAGE_NAME"
 docker pull $IMAGE_NAME
 
 echo "正在使用新镜像启动所有服务..."
-docker-compose up -d
+docker compose up -d
 
 echo "部署完成."
 

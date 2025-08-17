@@ -86,17 +86,18 @@ const Index: React.FC = () => {
       width: 50,
       fixed: 'left',
     },
-    {
-      title: '概念板块',
-      dataIndex: 'market',
-      key: 'market',
+        {
+      title: '行业',
+      dataIndex: 'industry',
+      key: 'industry',
       width: 60,
-      filters: Array.from(new Set(data.map(item => item.market))).map(market => ({
-        text: market,
-        value: market,
+      filters: Array.from(new Set(data.map(item => item.industry))).map(industry => ({
+        text: industry,
+        value: industry,
       })),
-      onFilter: (value, record) => record.market === value,
+      onFilter: (value, record) => record.industry === value,
     },
+
         {
       title: '跳转',
       key: 'action',
@@ -146,38 +147,38 @@ const Index: React.FC = () => {
       title: '最早筛选时间',
       dataIndex: 'gain_start_date',
       key: 'gain_start_date',
-      width: 180,
+      width: 120,
     },
     {
       title: '最晚筛选时间',
       dataIndex: 'gain_end_date',
       key: 'gain_end_date',
-      width: 180,
-    },
-    {
-      title: '行业',
-      dataIndex: 'industry',
-      key: 'industry',
       width: 120,
-      filters: Array.from(new Set(data.map(item => item.industry))).map(industry => ({
-        text: industry,
-        value: industry,
-      })),
-      onFilter: (value, record) => record.industry === value,
     },
     {
       title: '连续5天上涨天数',
       dataIndex: 'num_rise_continue_5day',
       key: 'num_rise_continue_5day',
       sorter: (a, b) => a.num_rise_continue_5day - b.num_rise_continue_5day,
-      width: 140,
+      width: 40,
     },
     {
       title: '换手率>15%天数',
       dataIndex: 'num_turnover_rate_gt_015',
       key: 'num_turnover_rate_gt_015',
       sorter: (a, b) => a.num_turnover_rate_gt_015 - b.num_turnover_rate_gt_015,
-      width: 140,
+      width: 40,
+    },
+        {
+      title: '概念板块',
+      dataIndex: 'market',
+      key: 'market',
+      width: 60,
+      filters: Array.from(new Set(data.map(item => item.market))).map(market => ({
+        text: market,
+        value: market,
+      })),
+      onFilter: (value, record) => record.market === value,
     },
 
   ];

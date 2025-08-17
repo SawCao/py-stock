@@ -19,7 +19,7 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /etc/nginx/html
 
 # 复制nginx配置
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY web/umi-stock/nginx.conf /etc/nginx/conf.d/default.conf
 
 # 暴露端口
 EXPOSE 9090

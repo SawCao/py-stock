@@ -62,7 +62,7 @@ CONFIG = {
     'MAX_WORKERS': 1,  # 并发线程数
     'RETRY_TIMES': 3,  # 重试次数
     'RETRY_DELAY': 2,  # 重试延迟(秒)
-    'CLEANUP_DAYS': 20,  # 数据保留天数
+    'CLEANUP_DAYS': 100,  # 数据保留天数
     'BATCH_SIZE': 100,  # 批处理大小
     'TIMEOUT': 30,  # 请求超时时间(秒)
 }
@@ -116,9 +116,9 @@ def fetch_minute_data(code: str, name: str) -> Optional[pd.DataFrame]:
     time.sleep(1)
     start_time = time.time()
     current_date = datetime.datetime.now()
-    #start_date_str = (current_date - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+    start_date_str = (current_date - datetime.timedelta(days=20)).strftime("%Y-%m-%d")
     # 只取当前这一天
-    start_date_str = current_date.strftime("%Y-%m-%d")
+    # start_date_str = current_date.strftime("%Y-%m-%d")
     end_date_str = current_date.strftime("%Y-%m-%d")
     try:
         # 获取5分钟K线数据

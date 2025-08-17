@@ -11,7 +11,7 @@ export default defineConfig({
   antd: {},
   proxy: {
     '/api': {
-      'target': 'http://localhost:5000',
+      'target': 'http://192.168.1.2:5001',
       'changeOrigin': true,
       'pathRewrite': { '^/api': '' },
     },

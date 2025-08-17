@@ -4,10 +4,10 @@ services:
     image: mysql:8.0
     container_name: stock-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: stock_root_2024
+      MYSQL_ROOT_PASSWORD: stock_root_2024_sawtt
       MYSQL_DATABASE: stock_data
       MYSQL_USER: stock_user
-      MYSQL_PASSWORD: stock_pass_2024
+      MYSQL_PASSWORD: stock_pass_2024_sawtt
     ports:
       - "3306:3306"
     volumes:
@@ -15,7 +15,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     command: --default-authentication-plugin=mysql_native_password
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pstock_root_2024"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pstock_root_2024_sawtt"]
       timeout: 20s
       interval: 10s
       retries: 10
@@ -33,16 +33,13 @@ services:
     environment:
       - MYSQL_HOST=stock-mysql
       - MYSQL_USER=stock_user
-      - MYSQL_PWD=stock_pass_2024
+      - MYSQL_PWD=stock_pass_2024_sawtt
       - MYSQL_DB=stock_data
       - TZ=Asia/Shanghai
       - FLASK_ENV=production
-      - DATABASE_URL=mysql+pymysql://stock_user:stock_pass_2024@stock-mysql:3306/stock_data
-      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=mysql+pymysql://stock_user:stock_pass_2024_sawtt@stock-mysql:3306/stock_data
     depends_on:
       mysql:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     volumes:
       - ./logs:/app/logs
@@ -55,7 +52,9 @@ services:
 
   # Web前端服务 (UmiJS)
   web-ui:
-    image: sawcao/umi-stock-ui:latest
+    build:
+      context: .
+      dockerfile: web/umi-stock/Dockerfile
     container_name: stock-webui
     ports:
       - "8888:9090"
@@ -71,26 +70,8 @@ services:
       - stock-network
     restart: unless-stopped
 
-
-  # Redis缓存服务
-  redis:
-    image: redis:7-alpine
-    container_name: stock-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      timeout: 20s
-      interval: 10s
-      retries: 10
-    networks:
-      - stock-network
-
 volumes:
   mysql_data:
-  redis_data:
 
 networks:
   stock-network:
