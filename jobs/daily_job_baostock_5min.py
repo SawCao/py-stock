@@ -59,7 +59,7 @@ logger = setup_logging()
 
 # 配置参数
 CONFIG = {
-    'MAX_WORKERS': 1,  # 并发线程数
+    'MAX_WORKERS': 2,  # 并发线程数
     'RETRY_TIMES': 3,  # 重试次数
     'RETRY_DELAY': 2,  # 重试延迟(秒)
     'CLEANUP_DAYS': 100,  # 数据保留天数
@@ -116,7 +116,7 @@ def fetch_minute_data(code: str, name: str) -> Optional[pd.DataFrame]:
     time.sleep(1)
     start_time = time.time()
     current_date = datetime.datetime.now()
-    start_date_str = (current_date - datetime.timedelta(days=20)).strftime("%Y-%m-%d")
+    start_date_str = (current_date - datetime.timedelta(days=6)).strftime("%Y-%m-%d")
     # 只取当前这一天
     # start_date_str = current_date.strftime("%Y-%m-%d")
     end_date_str = current_date.strftime("%Y-%m-%d")
@@ -431,7 +431,7 @@ def process_stocks_batch(stock_list: pd.DataFrame, use_concurrent: bool = True) 
     else:
         # 串行处理
         for index, row in stock_list.iterrows():
-            if index % 100 == 0:
+            if index % 200 == 0:
                 bs.login()  # 确保每100个股票重新登录
             success = process_single_stock(row['code'], row['name'])
             if success:

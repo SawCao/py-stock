@@ -14,9 +14,13 @@ const Login: React.FC = () => {
     // 模拟验证密码
     if (values.password === '110548') {
       message.success('登录成功！');
+      // 清除登录失败标识
+      localStorage.setItem('loginFailed', 'false');
       navigate('/index');
     } else {
-      message.error('密码错误！');
+      // 密码错误也跳转到index页面，但设置登录失败标识
+      localStorage.setItem('loginFailed', 'true');
+      navigate('/index');
     }
     
     setLoading(false);

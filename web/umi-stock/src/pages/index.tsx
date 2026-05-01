@@ -45,6 +45,7 @@ const Index: React.FC = () => {
   const [data, setData] = useState<StockData[]>([]);
   const [searchText, setSearchText] = useState('');
   const navigate = useNavigate();
+  
 
   const gainTypeOptions = [
     { value: 'Gain_5', label: '5分钟' },
@@ -68,7 +69,7 @@ const Index: React.FC = () => {
       width: 60,
       render: (text: string, record: StockData) => (
         <div
-          onClick={() => navigate(`/stock/${record.t2name}`)}
+          onClick={() => navigate(`/money-flow/${record.t2name}`)}
           style={{ cursor: 'pointer', color: '#1890ff' }}
         >
           {text}
@@ -185,11 +186,22 @@ const Index: React.FC = () => {
 
   const fetchData = async (params: any) => {
     setLoading(true);
+    
+    // 检查是否有登录失败标识
+    const loginFailed = localStorage.getItem('loginFailed');
+    if (loginFailed === 'true' || loginFailed === null) {
+      // 如果有登录失败标识，直接返回500错误
+      message.error('服务器错误，无法获取数据');
+      setData([]);
+      setLoading(false);
+      return;
+    }
+    
     try {
       const queryParams = new URLSearchParams({
         gain_threshold: params.gain_threshold || '0.03',
-        start_date: params.start_date || dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),
-        end_date: params.end_date || dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        start_date: params.start_date || dayjs().subtract(10, 'days').format('YYYY-MM-DD'),
+        end_date: params.end_date || dayjs().format('YYYY-MM-DD'),
         gain_type: params.gain_type || 'Gain_5',
         search: params.search || '',
       });
@@ -209,8 +221,8 @@ const Index: React.FC = () => {
   const onFinish = (values: any) => {
     const params = {
       gain_threshold: values.gain_threshold,
-      start_date: values.dateRange[0].format('YYYY-MM-DD HH:mm:ss'),
-      end_date: values.dateRange[1].format('YYYY-MM-DD HH:mm:ss'),
+      start_date: values.dateRange[0].format('YYYY-MM-DD'),
+      end_date: values.dateRange[1].format('YYYY-MM-DD'),
       gain_type: values.gain_type,
       search: values.stock_filter,
     };
@@ -227,8 +239,8 @@ const Index: React.FC = () => {
     // 初始加载数据
     const initialParams = {
       gain_threshold: '0.03',
-      start_date: dayjs().subtract(10, 'days').format('YYYY-MM-DD HH:mm:ss'),
-      end_date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      start_date: dayjs().subtract(10, 'days').format('YYYY-MM-DD'),
+      end_date: dayjs().format('YYYY-MM-DD'),
       gain_type: 'Gain_5',
       search: '',
     };
@@ -266,8 +278,7 @@ const Index: React.FC = () => {
             <Col xs={24} sm={12} md={8}>
               <Form.Item name="dateRange" label="时间段">
                 <RangePicker
-                  showTime
-                  format="YYYY-MM-DD HH:mm:ss"
+                  format="YYYY-MM-DD"
                   style={{ width: '100%' }}
                 />
               </Form.Item>

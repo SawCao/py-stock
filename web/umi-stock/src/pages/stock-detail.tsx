@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Statistic, Typography, Spin, message, Button, Space } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, LineChartOutlined } from '@ant-design/icons';
 import { useParams, useNavigate } from 'umi';
 import * as echarts from 'echarts';
 import './stock-detail.less';
@@ -331,6 +331,10 @@ const StockDetail: React.FC = () => {
     navigate(-1);
   };
 
+  const goToMoneyFlow = () => {
+    navigate(`/money-flow/${stockCode}`);
+  };
+
   if (!stockData) {
     return (
       <div className="stock-detail-container">
@@ -351,14 +355,22 @@ const StockDetail: React.FC = () => {
       </div>
       
       <div className="detail-content">
-        <Button 
-          type="primary" 
-          icon={<ArrowLeftOutlined />} 
-          onClick={goBack}
-          style={{ marginBottom: 16 }}
-        >
-          返回列表
-        </Button>
+        <Space style={{ marginBottom: 16 }}>
+          <Button 
+            type="primary" 
+            icon={<ArrowLeftOutlined />} 
+            onClick={goBack}
+          >
+            返回列表
+          </Button>
+          <Button 
+            type="default" 
+            icon={<LineChartOutlined />} 
+            onClick={goToMoneyFlow}
+          >
+            主力资金流向
+          </Button>
+        </Space>
 
         <Row gutter={16}>
           <Col span={24}>

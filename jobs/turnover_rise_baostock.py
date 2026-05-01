@@ -170,8 +170,8 @@ def stat_all():
         
         for index, data in datas.iterrows():
             try:
-                if index % 100 == 0:
-                    bs.login()  # 确保每100个股票重新登录
+                # if index % 800 == 0:
+                #     bs.login()  # 确保每100个股票重新登录
                 #time.sleep(1)
                 print("start to update gain: " + str(data['code']))
                 # if data.iat[i, 1].startswith('60') or data.iat[i, 1].startswith('688'):

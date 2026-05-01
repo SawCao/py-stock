@@ -22,7 +22,7 @@ services:
     networks:
       - stock-network
 
-  # Web后台服务 (Flask API)
+  # Web后台服务 (Flask API + Cron Jobs)
   web-backend:
     build:
       context: .
@@ -45,7 +45,7 @@ services:
       - ./logs:/app/logs
       - ./data:/app/data
       - ./jobs:/app/jobs
-      - ./web/new_web:/app/new_web
+      - ./:/mounted-config:ro
     networks:
       - stock-network
     restart: unless-stopped
@@ -53,18 +53,15 @@ services:
   # Web前端服务 (UmiJS)
   web-ui:
     build:
-      context: .
-      dockerfile: web/umi-stock/Dockerfile
+      context: web/umi-stock
+      dockerfile: ./Dockerfile
     container_name: stock-webui
     ports:
       - "8888:9090"
     environment:
       - NODE_ENV=production
       - REACT_APP_API_URL=http://localhost:5000
-    # depends_on:
-    #   - web-backend
     volumes:
-      - ./web/umi-stock/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./web/umi-stock/logs:/app/logs
     networks:
       - stock-network
