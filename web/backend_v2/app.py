@@ -189,12 +189,12 @@ def query_search_results(
                 cursor.execute(
                     f"""
                     SELECT
-                        REPLACE(symbol, '.', '') AS raw_code,
+                        code AS raw_code,
                         SUM(CASE WHEN rise_continue = 1 THEN 1 ELSE 0 END) AS num_rise_continue_5day,
-                        SUM(CASE WHEN turnover > 0.15 THEN 1 ELSE 0 END) AS num_turnover_rate_gt_015
+                        SUM(CASE WHEN turnover > 15 THEN 1 ELSE 0 END) AS num_turnover_rate_gt_015
                     FROM stock_zh_a_daily
                     WHERE date BETWEEN %s AND %s
-                      AND REPLACE(symbol, '.', '') IN ({placeholders})
+                      AND code IN ({placeholders})
                     GROUP BY raw_code
                     """,
                     [start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d"), *codes],
