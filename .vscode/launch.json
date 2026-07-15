@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flask (CLI, 5001)",
+      "type": "python",
+      "request": "launch",
+      "module": "flask",
+      "env": {
+        "FLASK_APP": "web/new_web/app.py",          // 如果是工厂： "myapp:create_app"
+        "FLASK_ENV": "development",
+        "FLASK_DEBUG": "0"              // 关闭 werkzeug debugger，防止和 VSCode 冲突
+      },
+      "args": [
+        "run",
+        "--host", "0.0.0.0",
+        "--port", "5001",
+        "--no-reload",                  // 关闭重载器，否则会起两个进程导致断点不生效/飘移
+        "--no-debugger"
+      ],
+      "jinja": true,
+      "justMyCode": true
+    }
+  ]
+}

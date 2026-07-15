@@ -84,8 +84,6 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# dotenv
-.env
 
 # virtualenv
 .venv
@@ -115,3 +113,6 @@ doc
 /bin
 pkg
 *.tmp
+/web/umi-stock/node_modules/
+/web/umi-stock/src/.umi/
+/web/umi-stock/src/.umi-production/

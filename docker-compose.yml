@@ -1,0 +1,74 @@
+services:
+  # MySQL数据库服务
+  mysql:
+    image: mysql:8.0
+    container_name: stock-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: stock_root_2024_sawtt
+      MYSQL_DATABASE: stock_data
+      MYSQL_USER: stock_user
+      MYSQL_PASSWORD: stock_pass_2024_sawtt
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pstock_root_2024_sawtt"]
+      timeout: 20s
+      interval: 10s
+      retries: 10
+    networks:
+      - stock-network
+
+  # Web后台服务 (Flask API + Cron Jobs)
+  web-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.combined
+    container_name: stock-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MYSQL_HOST=stock-mysql
+      - MYSQL_USER=stock_user
+      - MYSQL_PWD=stock_pass_2024_sawtt
+      - MYSQL_DB=stock_data
+      - TZ=Asia/Shanghai
+      - FLASK_ENV=production
+      - DATABASE_URL=mysql+pymysql://stock_user:stock_pass_2024_sawtt@stock-mysql:3306/stock_data
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./crontab:/mounted-config/crontab:ro
+    networks:
+      - stock-network
+    restart: unless-stopped
+
+  # Web前端服务 (UmiJS)
+  web-ui:
+    build:
+      context: web/umi-stock
+      dockerfile: ./Dockerfile
+    container_name: stock-webui
+    ports:
+      - "8888:9090"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_URL=http://localhost:5000
+    volumes:
+      - ./web/umi-stock/logs:/app/logs
+    networks:
+      - stock-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  stock-network:
+    driver: bridge

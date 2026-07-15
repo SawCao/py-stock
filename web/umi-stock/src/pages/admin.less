@@ -1,0 +1,80 @@
+.admin-container {
+  min-height: 100vh;
+  padding: 24px;
+  background: #f3f6fb;
+}
+
+.admin-banner {
+  margin-bottom: 20px;
+  padding: 24px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 55%, #22c55e 100%);
+  color: #fff;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
+
+  h1 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: 28px;
+  }
+
+  .ant-typography {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.88);
+  }
+}
+
+.log-toolbar {
+  margin-bottom: 16px;
+}
+
+.stock-query-toolbar {
+  margin-bottom: 12px;
+}
+
+.stock-basic-info {
+  margin-top: 12px;
+}
+
+.stock-db-sections {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.stock-query-empty {
+  margin-bottom: 0;
+}
+
+.log-list {
+  max-height: 560px;
+  overflow: auto;
+}
+
+.log-content {
+  min-height: 420px;
+  max-height: 65vh;
+  overflow: auto;
+  padding: 16px;
+  border-radius: 8px;
+  background: #0b1220;
+  color: #dbeafe;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 12px;
+  }
+
+  .admin-banner {
+    padding: 20px;
+
+    h1 {
+      font-size: 22px;
+    }
+  }
+}
