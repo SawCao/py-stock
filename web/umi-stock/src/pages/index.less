@@ -31,6 +31,19 @@
   }
 }
 
+.search-form {
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+
+  .ant-picker,
+  .ant-select,
+  .ant-input,
+  .search-submit {
+    width: 100%;
+  }
+}
+
 .table-card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -50,6 +63,16 @@
   .table-card {
     .ant-card-body {
       padding: 16px;
+    }
+  }
+
+  .search-form {
+    .ant-picker-range {
+      width: 100%;
+    }
+
+    .search-submit {
+      min-height: 40px;
     }
   }
 }

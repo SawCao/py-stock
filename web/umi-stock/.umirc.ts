@@ -5,6 +5,7 @@ export default defineConfig({
   routes: [
     { path: '/', component: 'login' },
     { path: '/index', component: 'index' },
+    { path: '/admin', component: 'admin' },
     { path: '/stock/:stockCode', component: 'stock-detail' },
     { path: '/money-flow/:stockCode', component: 'money-flow' },
   ],

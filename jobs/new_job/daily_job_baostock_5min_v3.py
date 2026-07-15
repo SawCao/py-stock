@@ -62,11 +62,12 @@ CONFIG = {
     'SLEEP_BETWEEN_STOCKS': 1,  # 股票间延迟(秒)
     'QUERY_DAYS': 2,  # 查询最近N天的数据（默认6天）
     'MAX_CONSECUTIVE_EMPTY': 120,  # 连续无数据的股票超过该值则认为数据源异常，提前退出
-    'MAX_RUNTIME_MINUTES': 999999,  # 任务最长运行时间，超过则强制收尾退出
+    'MAX_CONSECUTIVE_NETWORK_FAILURES': 5,  # 连续网络/登录异常超过该值则直接终止任务
+    'MAX_RUNTIME_MINUTES': int(os.environ.get('DAILY_JOB_MAX_RUNTIME_MINUTES', '360')),  # 任务最长运行时间，超过则强制收尾退出
 }
 
 # 计算周期配置
-INTERVALS = [5, 10, 15, 20, 30, 60]
+INTERVALS = [1, 5, 10, 15, 20, 30, 60]
 
 # 目标数据表
 TARGET_TABLE = "stock_zh_a_minute_ol_4"
@@ -74,8 +75,31 @@ TARGET_TABLE = "stock_zh_a_minute_ol_4"
 class TimeoutException(Exception):
     pass
 
+
+class JobAbortException(Exception):
+    pass
+
 def timeout_handler(signum, frame):
     raise TimeoutException("处理单只股票超时")
+
+
+def is_baostock_transport_error(error: Exception | str | None) -> bool:
+    """识别需要强制重连或直接中止任务的 Baostock 连接级异常。"""
+    if error is None:
+        return False
+
+    text = str(error).lower()
+    keywords = (
+        'broken pipe',
+        '接收数据异常',
+        '网络接收错误',
+        'timeout',
+        'timed out',
+        '未登录',
+        '10001001',
+        '10002007',
+    )
+    return any(keyword in text for keyword in keywords)
 
 
 # ==================== 日志配置 ====================
@@ -194,6 +218,8 @@ class DatabaseManager:
                 logger.info(f"✓ 表 {TARGET_TABLE} 创建成功")
             else:
                 logger.info(f"✓ 表 {TARGET_TABLE} 已存在")
+                self._ensure_gain_columns(cursor)
+                conn.commit()
                 
         except Exception as e:
             logger.error(f"✗ 检查/创建表失败: {e}", exc_info=True)
@@ -219,6 +245,7 @@ class DatabaseManager:
             high DECIMAL(10, 3) COMMENT '最高价',
             low DECIMAL(10, 3) COMMENT '最低价',
             volume BIGINT COMMENT '成交量',
+            Gain_1 DECIMAL(10, 6) COMMENT '1周期波动率',
             Gain_5 DECIMAL(10, 6) COMMENT '5周期波动率',
             Gain_10 DECIMAL(10, 6) COMMENT '10周期波动率',
             Gain_15 DECIMAL(10, 6) COMMENT '15周期波动率',
@@ -232,6 +259,30 @@ class DatabaseManager:
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='A股分钟级数据表';
         """
         cursor.execute(create_sql)
+
+    def _ensure_gain_columns(self, cursor):
+        """为历史表补齐缺失的 Gain 列。"""
+        cursor.execute(
+            """
+            SELECT COLUMN_NAME
+            FROM information_schema.columns
+            WHERE table_schema = %s AND table_name = %s
+            """,
+            (MYSQL_DB, TARGET_TABLE),
+        )
+        existing_columns = {row[0] for row in cursor.fetchall()}
+
+        for interval in INTERVALS:
+            column_name = f"Gain_{interval}"
+            if column_name in existing_columns:
+                continue
+
+            logger.info(f"⚠ 列 {column_name} 不存在，开始补充...")
+            cursor.execute(
+                f"ALTER TABLE {TARGET_TABLE} ADD COLUMN {column_name} DECIMAL(10, 6) COMMENT %s AFTER volume",
+                (f"{interval}周期波动率",),
+            )
+            logger.info(f"✓ 列 {column_name} 已补充")
     
     def insert_dataframe(self, df: pd.DataFrame, table_name: str) -> Tuple[int, int]:
         """
@@ -530,7 +581,7 @@ class StockDataProcessor:
         except Exception as e:
             if retry_count < CONFIG['RETRY_TIMES']:
                 logger.warning(f"  ⚠ {code} [{name}] 获取数据失败，重试 {retry_count + 1}/{CONFIG['RETRY_TIMES']}: {e}")
-                if "Broken pipe" in str(e) or "接收数据异常" in str(e) or "32" in str(e) or "timeout" in str(e).lower() or "未登录" in str(e) or "10001001" in str(e):
+                if is_baostock_transport_error(e) or "32" in str(e):
                     logger.warning(f"  ⚠ 捕获到Broken pipe/网络异常/未登录，强制休眠10秒并重连...")
                     time.sleep(10)
                     try:
@@ -653,11 +704,16 @@ class StockDataProcessor:
 
 # ==================== 主流程 ====================
 
-def process_all_stocks(start_datetime: datetime.datetime, query_days: int = CONFIG['QUERY_DAYS']):
+def process_all_stocks(
+    start_datetime: datetime.datetime,
+    query_days: int = CONFIG['QUERY_DAYS'],
+    max_runtime_minutes: int = CONFIG['MAX_RUNTIME_MINUTES'],
+):
     """主处理流程"""
     start_time = time.time()
-    max_runtime_seconds = CONFIG['MAX_RUNTIME_MINUTES'] * 60
+    max_runtime_seconds = max_runtime_minutes * 60
     consecutive_empty = 0  # 连续无数据的计数器，用于识别数据源异常
+    consecutive_network_failures = 0  # 连续网络/登录异常计数，用于快速终止卡死式任务
     
     # 统计信息
     stats = {
@@ -713,7 +769,7 @@ def process_all_stocks(start_datetime: datetime.datetime, query_days: int = CONF
                 # 若整体运行时间超限，提前退出，避免长时间占用CPU
                 if time.time() - start_time > max_runtime_seconds:
                     logger.error(
-                        f"✗ 任务超过最大运行时间 {CONFIG['MAX_RUNTIME_MINUTES']} 分钟，提前结束"
+                        f"✗ 任务超过最大运行时间 {max_runtime_minutes} 分钟，提前结束"
                     )
                     break
 
@@ -749,6 +805,18 @@ def process_all_stocks(start_datetime: datetime.datetime, query_days: int = CONF
                         break
                 else:
                     consecutive_empty = 0
+
+                if not result['success'] and is_baostock_transport_error(result.get('error')):
+                    consecutive_network_failures += 1
+                    logger.error(
+                        f"✗ 连续网络/登录异常 {consecutive_network_failures} 次: {result['code']} [{result['name']}] - {result['error']}"
+                    )
+                    if consecutive_network_failures >= CONFIG['MAX_CONSECUTIVE_NETWORK_FAILURES']:
+                        raise JobAbortException(
+                            f"Baostock 连续网络/登录异常达到 {consecutive_network_failures} 次，终止任务"
+                        )
+                else:
+                    consecutive_network_failures = 0
 
                 if result['success']:
                     stats['success'] += 1
@@ -867,6 +935,14 @@ def parse_arguments():
         metavar='YYYYMMDD',
         help='指定基准日期（格式: YYYYMMDD，默认为当前日期）'
     )
+
+    parser.add_argument(
+        '--max-runtime-minutes',
+        type=int,
+        default=CONFIG['MAX_RUNTIME_MINUTES'],
+        metavar='N',
+        help=f'任务最大运行时长（分钟，默认: {CONFIG["MAX_RUNTIME_MINUTES"]}）'
+    )
     
     return parser.parse_args()
 
@@ -885,7 +961,11 @@ def main():
             logger.info(f"使用当前日期: {target_datetime.strftime('%Y-%m-%d')}")
         
         # 执行任务
-        process_all_stocks(target_datetime, query_days=args.days)
+        process_all_stocks(
+            target_datetime,
+            query_days=args.days,
+            max_runtime_minutes=max(1, args.max_runtime_minutes),
+        )
         
     except KeyboardInterrupt:
         logger.warning("\n⚠ 任务被用户中断")

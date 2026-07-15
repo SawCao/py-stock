@@ -2,7 +2,10 @@ SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # 每天下午4点执行数据统计任务（周一至周五）
-0 16 * * 1-5 set -a; . /app/.env; set +a; /usr/local/bin/python3 /app/jobs/new_job/daily_job_baostock_5min_v3.py >> /app/logs/cron_daily_job_baostock.log 2>&1
+0 16 * * 1-5 set -a; . /app/.env; set +a; /bin/bash /app/jobs/run_cron_job.sh daily_job_baostock /app/logs/cron_daily_job_baostock_$(date +\%Y\%m\%d).log scheduled /usr/local/bin/python3 /app/jobs/new_job/daily_job_baostock_5min_v3.py
 
 # 每天下午5点执行
-0 17 * * 1-5 set -a; . /app/.env; set +a; /usr/local/bin/python3 /app/jobs/new_job/turnover_rise_baostock_v3.py >> /app/logs/cron_turnover_rise_baostock.log 2>&1
+0 17 * * 1-5 set -a; . /app/.env; set +a; /bin/bash /app/jobs/run_cron_job.sh turnover_rise_baostock /app/logs/cron_turnover_rise_baostock_$(date +\%Y\%m\%d).log scheduled /usr/local/bin/python3 /app/jobs/new_job/turnover_rise_baostock_v3.py
+
+# 每天晚上6点同步行业板块和概念板块映射
+0 18 * * 1-5 set -a; . /app/.env; set +a; /bin/bash /app/jobs/run_cron_job.sh stock_board_sync /app/logs/cron_stock_board_sync_$(date +\%Y\%m\%d).log scheduled /usr/local/bin/python3 /app/jobs/new_job/stock_board_sync.py

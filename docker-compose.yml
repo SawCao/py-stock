@@ -44,8 +44,7 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./data:/app/data
-      - ./jobs:/app/jobs
-      - ./:/mounted-config:ro
+      - ./crontab:/mounted-config/crontab:ro
     networks:
       - stock-network
     restart: unless-stopped

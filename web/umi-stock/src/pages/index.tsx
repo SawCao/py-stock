@@ -31,8 +31,8 @@ interface StockData {
   volume_diff: string;
   gain_start_date: string;
   gain_end_date: string;
-  market: string;
   industry: string;
+  industry_boards: string;
   num_rise_continue_5day: number;
   num_turnover_rate_gt_015: number;
   url_1: string;
@@ -48,16 +48,13 @@ const Index: React.FC = () => {
   
 
   const gainTypeOptions = [
-    { value: 'Gain_5', label: '5分钟' },
-    { value: 'Gain_6', label: '6分钟' },
-    { value: 'Gain_7', label: '7分钟' },
-    { value: 'Gain_8', label: '8分钟' },
-    { value: 'Gain_9', label: '9分钟' },
-    { value: 'Gain_10', label: '10分钟' },
-    { value: 'Gain_15', label: '15分钟' },
-    { value: 'Gain_20', label: '20分钟' },
-    { value: 'Gain_30', label: '30分钟' },
-    { value: 'Gain_60', label: '60分钟' },
+    { value: 'Gain_1', label: '5分钟' },
+    { value: 'Gain_5', label: '25分钟' },
+    { value: 'Gain_10', label: '50分钟' },
+    { value: 'Gain_15', label: '75分钟' },
+    { value: 'Gain_20', label: '100分钟' },
+    { value: 'Gain_30', label: '150分钟' },
+    { value: 'Gain_60', label: '300分钟' },
   ];
 
   const columns: ColumnsType<StockData> = [
@@ -87,8 +84,8 @@ const Index: React.FC = () => {
       width: 50,
       fixed: 'left',
     },
-        {
-      title: '行业',
+    {
+      title: '行业代码/名称',
       dataIndex: 'industry',
       key: 'industry',
       width: 60,
@@ -99,12 +96,20 @@ const Index: React.FC = () => {
       onFilter: (value, record) => record.industry === value,
     },
 
-        {
+    {
       title: '跳转',
       key: 'action',
-      width: 75,
+      width: 88,
       render: (_, record) => (
         <Space direction="vertical">
+          <Button
+            type="dashed"
+            size="small"
+            href={`http://sawtt.top:18868/chat?stock=${encodeURIComponent(record.t2name)}&name=${encodeURIComponent(record.rname)}&token=091161`}
+            target="_blank"
+          >
+            AI分析
+          </Button>
           <Button
             type="primary"
             size="small"
@@ -170,16 +175,12 @@ const Index: React.FC = () => {
       sorter: (a, b) => a.num_turnover_rate_gt_015 - b.num_turnover_rate_gt_015,
       width: 40,
     },
-        {
-      title: '概念板块',
-      dataIndex: 'market',
-      key: 'market',
-      width: 60,
-      filters: Array.from(new Set(data.map(item => item.market))).map(market => ({
-        text: market,
-        value: market,
-      })),
-      onFilter: (value, record) => record.market === value,
+    {
+      title: '行业板块',
+      dataIndex: 'industry_boards',
+      key: 'industry_boards',
+      width: 120,
+      render: (text: string) => text || '-',
     },
 
   ];
@@ -202,7 +203,7 @@ const Index: React.FC = () => {
         gain_threshold: params.gain_threshold || '0.03',
         start_date: params.start_date || dayjs().subtract(10, 'days').format('YYYY-MM-DD'),
         end_date: params.end_date || dayjs().format('YYYY-MM-DD'),
-        gain_type: params.gain_type || 'Gain_5',
+        gain_type: params.gain_type || 'Gain_1',
         search: params.search || '',
       });
 
@@ -241,7 +242,7 @@ const Index: React.FC = () => {
       gain_threshold: '0.03',
       start_date: dayjs().subtract(10, 'days').format('YYYY-MM-DD'),
       end_date: dayjs().format('YYYY-MM-DD'),
-      gain_type: 'Gain_5',
+      gain_type: 'Gain_1',
       search: '',
     };
     fetchData(initialParams);
@@ -250,7 +251,7 @@ const Index: React.FC = () => {
     form.setFieldsValue({
       gain_threshold: '0.03',
       dateRange: [dayjs().subtract(10, 'days'), dayjs()],
-      gain_type: 'Gain_5',
+      gain_type: 'Gain_1',
     });
   }, []);
 
@@ -258,11 +259,14 @@ const Index: React.FC = () => {
     <div className="stock-container">
       <div className="system-banner">
         <h1>帮赛系统</h1>
+        <Button style={{ marginTop: 16 }} onClick={() => navigate('/admin')}>
+          进入管理台
+        </Button>
       </div>
       <Card className="search-card">
-        <Form form={form} onFinish={onFinish} layout="inline">
-          <Row gutter={16} style={{ width: '100%' }}>
-            <Col xs={24} sm={12} md={6}>
+        <Form form={form} onFinish={onFinish} layout="vertical" className="search-form">
+          <Row gutter={[12, 12]} style={{ width: '100%' }}>
+            <Col xs={24} sm={12} lg={6}>
               <Form.Item name="stock_filter" label="股票名称/代码">
                 <Input
                   placeholder="请输入名称或代码"
@@ -270,20 +274,22 @@ const Index: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={12} md={6}>
+            <Col xs={24} sm={12} lg={4}>
               <Form.Item name="gain_threshold" label="筛选率">
                 <Input placeholder="请输入筛选率" />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={12} md={8}>
+            <Col xs={24} lg={8}>
               <Form.Item name="dateRange" label="时间段">
                 <RangePicker
                   format="YYYY-MM-DD"
+                  inputReadOnly
+                  allowClear={false}
                   style={{ width: '100%' }}
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={12} md={6}>
+            <Col xs={24} sm={12} lg={4}>
               <Form.Item name="gain_type" label="筛选区间">
                 <Select placeholder="请选择筛选区间">
                   {gainTypeOptions.map(option => (
@@ -294,9 +300,9 @@ const Index: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col xs={24} sm={12} md={4}>
-              <Form.Item>
-                <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
+            <Col xs={24} sm={12} lg={2}>
+              <Form.Item label=" ">
+                <Button className="search-submit" type="primary" htmlType="submit" icon={<SearchOutlined />}>
                   查询
                 </Button>
               </Form.Item>

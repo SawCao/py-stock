@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+logs/
+data/
+.git/
+web/umi-stock/node_modules/
+web/umi-stock/dist/
+web/umi-stock/.umi/
+web/umi-stock/.cache/
